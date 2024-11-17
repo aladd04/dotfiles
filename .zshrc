@@ -93,6 +93,7 @@ syncdots() {
   rsync -a ~/.config/lazygit/ ~/.dotfiles/.config/lazygit/
   rsync -a ~/.config/nvim/ ~/.dotfiles/.config/nvim/
   rsync -a ~/.config/yazi/ ~/.dotfiles/.config/yazi/
+  rsync -a ~/.config/btop/ ~/.dotfiles/.config/btop/
   rsync -a ~/.config/starship.toml ~/.dotfiles/.config/starship.toml
 }
 
