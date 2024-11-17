@@ -20,7 +20,7 @@
                         ]
                     },
                     {
-                        "description": "Left Control + H/J/K/L to Left/Down/Up/Right Arrow Keys",
+                        "description": "Option + H/J/K/L to Left/Down/Up/Right Arrow Keys",
                         "manipulators": [
                             {
                                 "from": {
