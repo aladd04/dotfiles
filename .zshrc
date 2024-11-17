@@ -40,20 +40,8 @@ function y() {
 # fzf
 source <(fzf --zsh)
 
-# fzf catppuccin theme
-export FZF_DEFAULT_OPTS=" \
---color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
---color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
---color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
---color=selected-bg:#45475a \
---multi"
-
 # setup fzf preview
 show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else bat -n --color=always --line-range :500 {}; fi"
-
-# allow previews in fzf hotkeys
-export FZF_CTRL_T_OPTS="--preview '$show_file_or_dir_preview'"
-export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
 
 # fzf previews
 _fzf_comprun() {
@@ -68,11 +56,6 @@ _fzf_comprun() {
   esac
 }
 
-# use fd for some fzf commands
-export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
-
 # use fd for fzf path gen, and ignore certain folders
 _fzf_compgen_path() {
   fd --hidden --exclude .git . "$1"
@@ -81,6 +64,36 @@ _fzf_compgen_path() {
 # use fd for fzf dir completion, and ignore certain folders
 _fzf_compgen_dir() {
   fd --type=d --hidden --exclude .git . "$1"
+}
+
+# use fd or eza for some fzf commands
+export FZF_CTRL_T_OPTS="--preview '$show_file_or_dir_preview'"
+export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
+export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
+
+# fzf catppuccin theme
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
+--color=selected-bg:#45475a \
+--multi"
+
+# dots syncing
+syncdots() {
+  rsync -a ~/.zprofile ~/.dotfiles/.zprofile
+  rsync -a ~/.zshrc ~/.dotfiles/.zshrc
+  rsync -a ~/.vimrc ~/.dotfiles/.vimrc
+  rsync -a ~/.gitconfig ~/.dotfiles/.gitconfig
+  rsync -a ~/.config/bat/ ~/.dotfiles/.config/bat/
+  rsync -a ~/.config/eza/ ~/.dotfiles/.config/eza/
+  rsync -a ~/.config/karabiner/karabiner.json ~/.dotfiles/.config/karabiner/karabiner.json
+  rsync -a ~/.config/lazygit/ ~/.dotfiles/.config/lazygit/
+  rsync -a ~/.config/nvim/ ~/.dotfiles/.config/nvim/
+  rsync -a ~/.config/yazi/ ~/.dotfiles/.config/yazi/
+  rsync -a ~/.config/starship.toml ~/.dotfiles/.config/starship.toml
 }
 
 # zoxide
