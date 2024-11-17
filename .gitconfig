@@ -1,0 +1,9 @@
+[user]
+	name = Andy Ladd
+	email = aladd04@gmail.com
+[core]
+	editor = code --wait
+[init]
+	defaultBranch = main
+[push]
+	autoSetupRemote = true
