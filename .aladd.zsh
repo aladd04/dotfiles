@@ -86,8 +86,7 @@ syncdots() {
   # Array of files and directories to sync
   local items=(
     ".zprofile"
-    ".zshrc"
-    ".zshrc-aladd"
+    ".aladd.zsh"
     ".vimrc"
     ".gitconfig"
     ".config/bat/"
