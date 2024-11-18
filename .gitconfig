@@ -2,7 +2,7 @@
 	name = Andy Ladd
 	email = aladd04@gmail.com
 [core]
-	editor = code --wait
+	editor = nvim
 [init]
 	defaultBranch = main
 [push]
