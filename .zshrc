@@ -83,18 +83,39 @@ export FZF_DEFAULT_OPTS=" \
 
 # dots syncing
 syncdots() {
-  rsync -a ~/.zprofile ~/.dotfiles/.zprofile
-  rsync -a ~/.zshrc ~/.dotfiles/.zshrc
-  rsync -a ~/.vimrc ~/.dotfiles/.vimrc
-  rsync -a ~/.gitconfig ~/.dotfiles/.gitconfig
-  rsync -a ~/.config/bat/ ~/.dotfiles/.config/bat/
-  rsync -a ~/.config/eza/ ~/.dotfiles/.config/eza/
-  rsync -a ~/.config/karabiner/karabiner.json ~/.dotfiles/.config/karabiner/karabiner.json
-  rsync -a ~/.config/lazygit/ ~/.dotfiles/.config/lazygit/
-  rsync -a ~/.config/nvim/ ~/.dotfiles/.config/nvim/
-  rsync -a ~/.config/yazi/ ~/.dotfiles/.config/yazi/
-  rsync -a ~/.config/btop/ ~/.dotfiles/.config/btop/
-  rsync -a ~/.config/starship.toml ~/.dotfiles/.config/starship.toml
+  # Array of files and directories to sync
+  local items=(
+    ".zprofile"
+    ".zshrc"
+    ".vimrc"
+    ".gitconfig"
+    ".config/bat/"
+    ".config/eza/"
+    ".config/karabiner/karabiner.json"
+    ".config/lazygit/"
+    ".config/nvim/"
+    ".config/yazi/"
+    ".config/btop/"
+    ".config/starship.toml"
+  )
+
+  # Check the argument
+  if [[ $1 == "push" ]]; then
+    for item in "${items[@]}"; do
+      local src="$HOME/$item"
+      local dest="$HOME/.dotfiles/$item"
+      rsync -a "$src" "$dest"
+    done
+  elif [[ $1 == "pull" ]]; then
+    for item in "${items[@]}"; do
+      local src="$HOME/.dotfiles/$item"
+      local dest="$HOME/$item"
+      rsync -a "$src" "$dest"
+    done
+  else
+    echo "Usage: syncdots [push|pull]"
+    return 1
+  fi
 }
 
 # zoxide
