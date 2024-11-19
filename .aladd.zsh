@@ -85,10 +85,7 @@ export FZF_DEFAULT_OPTS=" \
 syncdots() {
   # Array of files and directories to sync
   local items=(
-    ".zprofile"
     ".aladd.zsh"
-    ".vimrc"
-    ".gitconfig"
     ".config/bat/"
     ".config/eza/"
     ".config/karabiner/karabiner.json"
