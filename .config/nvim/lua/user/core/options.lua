@@ -1,27 +1,34 @@
 vim.cmd("let g:netrw_liststyle = 3") -- set explorer view to tree-style
 
-vim.opt.relativenumber = true -- relative line numbers
-vim.opt.number = true -- absolute line number on cursor line (when relative number is on)
+local o = vim.opt
 
-vim.opt.tabstop = 2 -- tab size
-vim.opt.shiftwidth = 2 -- indent size
-vim.opt.expandtab = true -- make tab be spaces
-vim.opt.autoindent = true -- copy indent from current line when starting new one
+o.mouse = "a" -- enable mouse support in all modes
 
-vim.opt.wrap = false -- disable line wrapping
+o.relativenumber = true -- relative line numbers
+o.number = true -- absolute line number on cursor line (when relative number is on)
 
-vim.opt.ignorecase = true -- ignore case when searching
-vim.opt.smartcase = true -- do case searching when mixed case is provided
+o.tabstop = 2 -- tab size
+o.shiftwidth = 2 -- indent size
+o.softtabstop = 2 -- ensure consistency
+o.expandtab = true -- make tab be spaces
+o.autoindent = true -- copy indent from current line when starting new one
+o.smartindent = true -- attempt to follow tab pattern in file
 
-vim.opt.cursorline = true -- highlight current cursor line
+o.wrap = false -- disable line wrapping
 
-vim.opt.termguicolors = true -- fancy colors, needs modern terminal
-vim.opt.background = "dark" -- force dark theme
-vim.opt.signcolumn = "yes" -- show column for icons or symbols next to line numbers
+o.ignorecase = true -- ignore case when searching
+o.smartcase = true -- do case searching when mixed case is provided
 
-vim.opt.clipboard:append("unnamedplus") -- use system clipboard
+o.cursorline = true -- highlight current cursor line
 
-vim.opt.splitright = true -- split vertical windows to the right
-vim.opt.splitbelow = true -- split horizontal windows to the bottom
+o.termguicolors = true -- fancy colors, needs modern terminal
+o.background = "dark" -- force dark theme
+o.signcolumn = "yes" -- show column for icons or symbols next to line numbers
 
-vim.opt.swapfile = false -- disable swapfile
+o.clipboard:append("unnamedplus") -- use system clipboard
+
+o.laststatus = 3 -- show a global status bar
+o.splitright = true -- split vertical windows to the right
+o.splitbelow = true -- split horizontal windows to the bottom
+
+o.swapfile = false -- disable swapfile
