@@ -26,7 +26,6 @@ return {
 
     map("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer pane" })
     map("n", "<leader>ef", "<cmd>NvimTreeFocus<CR>", { desc = "Focus file explorer pane" })
-    map("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", { desc = "Collapse file explorer" })
-    map("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh file explorer" })
+    map("n", "<leader>er", "<cmd>NvimTreeFindFile<CR>", { desc = "Reveal current file in explorer pane" })
   end,
 }
