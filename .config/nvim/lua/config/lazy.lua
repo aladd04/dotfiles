@@ -20,7 +20,12 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     os.exit(1)
   end
 end
+
 vim.opt.rtp:prepend(lazypath)
 
 -- setup lazy to use our plugins directory
-require("lazy").setup("config.plugins")
+require("lazy").setup("config.plugins", {
+  change_detection = {
+    notify = false,
+  },
+})
