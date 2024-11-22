@@ -1,10 +1,11 @@
 return {
-  "goolord/alpha-nvim",
+  "goolord/alpha-nvim", -- https://github.com/goolord/alpha-nvim
   event = "VimEnter", -- our greeter
   config = function()
     local alpha = require("alpha")
     local dashboard = require("alpha.themes.dashboard")
 
+    -- stole from https://github.com/MaximilianLloyd/ascii.nvim/tree/master/lua/ascii
     dashboard.section.header.val = {
 "  ██████   █████                   █████   █████  ███                  ",
 " ░░██████ ░░███                   ░░███   ░░███  ░░░                   ",

@@ -1,7 +1,7 @@
 return {
   "nvim-tree/nvim-tree.lua", -- https://github.com/nvim-tree/nvim-tree.lua?tab=readme-ov-file
   dependencies = {
-    "nvim-tree/nvim-web-devicons"
+    "nvim-tree/nvim-web-devicons", -- https://github.com/nvim-tree/nvim-web-devicons
   },
   version = "*",
   lazy = false, -- load immediately
