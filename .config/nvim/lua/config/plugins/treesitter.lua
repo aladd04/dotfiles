@@ -8,6 +8,7 @@ return {
     configs.setup({
       highlight = {
         enable = true,
+        use_languagetree = true, -- support different syntax for embedded languages
       },
       indent = {
         enable = true,
