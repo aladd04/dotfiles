@@ -13,7 +13,7 @@ return {
     local telescope = require("telescope")
     local actions = require("telescope.actions")
 
-    -- run ":help telescope.builtin" to see options as they're not documented on GitHub
+    -- run ":help telescope.builtin" to see options or visit https://github.com/nvim-telescope/telescope.nvim/blob/master/doc/telescope.txt
     telescope.setup({
       defaults = {
         path_display = {
@@ -35,6 +35,7 @@ return {
           "--column",
           "--smart-case",
           "--hidden", -- the rest is default, adding this so it searches hidden files
+          "--fixed-strings", -- take the string literally without the need to escape
         },
         extensions = {
           fzf = {
