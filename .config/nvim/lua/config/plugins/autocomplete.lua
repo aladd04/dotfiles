@@ -18,7 +18,27 @@ return {
     local cmp = require("cmp")
     local luasnip = require("luasnip")
 
+    -- function to toggle autocomplete behavior
+    local autocomplete_enabled = false
+    local function toggle_autocomplete()
+      autocomplete_enabled = not autocomplete_enabled
+      cmp.setup({
+        autocomplete_enabled = function()
+          return autocomplete_enabled
+        end,
+      })
+
+      if autocomplete_enabled then
+        print("Autocomplete: ON")
+      else
+        print("Autocomplete: OFF")
+      end
+    end
+
     cmp.setup({
+      enabled = function()
+        return autocomplete_enabled
+      end,
       completion = {
         completeopt = "menu,menuone",
       },
@@ -30,9 +50,8 @@ return {
       mapping = cmp.mapping.preset.insert({
         ["<C-p>"] = cmp.mapping.select_prev_item(),
         ["<C-n>"] = cmp.mapping.select_next_item(),
-        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-u>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<C-f>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-g>"] = cmp.mapping.scroll_docs(4),
         ["<C-e>"] = cmp.mapping.close(),
         ["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true, }),
       }),
@@ -49,5 +68,8 @@ return {
         { name = "plugins" },
       }),
     })
+
+    -- add keymap to toggle autocomplete
+    vim.keymap.set("n", "<leader>a", toggle_autocomplete, { desc = "Toggle autocomplete" })
   end,
 }
