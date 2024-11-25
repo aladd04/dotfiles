@@ -5,6 +5,8 @@ return {
   },
   ft = "cs",
   config = function()
+    -- NOTE: to make this work we have to manually install "roslyn" and "rzls" in neovim with :MasonInstall
+
     local roslyn = require("roslyn")
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
     local capabilities = cmp_nvim_lsp.default_capabilities()
