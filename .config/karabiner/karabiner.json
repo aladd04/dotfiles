@@ -4,6 +4,19 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "Disable option + s",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "s",
+                                    "modifiers": { "mandatory": ["option"] }
+                                },
+                                "to": [],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Left Control to Escape when Shift is held",
                         "manipulators": [
                             {
