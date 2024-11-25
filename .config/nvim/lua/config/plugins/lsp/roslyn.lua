@@ -13,7 +13,7 @@ return {
     roslyn.setup({
       config = {
         capabilities = capabilities,
-        on_attach = require("lspattach"),
+        -- on_attach = require("lspattach"),
         handlers = require("rzls.roslyn_handlers"),
       },
       args = {
