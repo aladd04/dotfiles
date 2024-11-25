@@ -18,7 +18,6 @@ return {
       -- language servers to install or use, many may have pre-reqs to install in order to use
       ensure_installed = {
         "angularls",
-        "azure_pipelines_ls",
         "bashls",
         "clangd",
         "cssls",
@@ -39,7 +38,6 @@ return {
         "taplo",
         "vimls",
         "lemminx",
-        "yamlls",
       },
     })
   end
