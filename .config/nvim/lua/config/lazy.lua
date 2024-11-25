@@ -24,7 +24,16 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- setup lazy to use our plugins directory
-require("lazy").setup("config.plugins", {
+require("lazy").setup({
+    { import = "config.plugins" },
+    { import = "config.plugins.lsp" }
+  }, {
+  -- update checks
+  checker = {
+    enabled = true,
+    notify = false,
+  },
+  -- don't notify about nvim files that changed
   change_detection = {
     notify = false,
   },

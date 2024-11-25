@@ -19,7 +19,7 @@ return {
     local luasnip = require("luasnip")
 
     -- function to toggle autocomplete behavior
-    local autocomplete_enabled = false
+    local autocomplete_enabled = true
     local function toggle_autocomplete()
       autocomplete_enabled = not autocomplete_enabled
       cmp.setup({
@@ -53,19 +53,19 @@ return {
         ["<C-f>"] = cmp.mapping.scroll_docs(-4),
         ["<C-g>"] = cmp.mapping.scroll_docs(4),
         ["<C-e>"] = cmp.mapping.close(),
-        ["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true, }),
+        ["<Tab>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true, }),
       }),
       sources = cmp.config.sources({
         { name = "luasnip" },
         { name = "buffer" },
-        { name = "path" },
-        { name = "cmdline", option = { ignore_cmds = { "Man", "!" }, }, },
+        -- { name = "path" },
+        -- { name = "cmdline", option = { ignore_cmds = { "Man", "!" }, }, },
         { name = "nvim_lsp" },
         { name = "nvim_lua" },
-        { name = "zsh" },
-        { name = "html-css" },
-        { name = "otter-ls" },
-        { name = "plugins" },
+        -- { name = "zsh" },
+        -- { name = "html-css" },
+        -- { name = "otter-ls" },
+        -- { name = "plugins" },
       }),
     })
 
