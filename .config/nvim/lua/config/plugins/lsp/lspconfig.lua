@@ -9,10 +9,7 @@ return {
     local lspconfig = require("lspconfig")
     local mason_lspconfig = require("mason-lspconfig")
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
-
     local map = vim.keymap.set
-
-    -- used to enable autocompletion (assign to every lsp server config)
     local capabilities = cmp_nvim_lsp.default_capabilities()
 
     -- on lsp attach let's get some extra lsp-specific keybinds
@@ -42,6 +39,7 @@ return {
       end,
     })
 
+    -- note: some configuration can be in other lsp plugin files
     mason_lspconfig.setup_handlers({
       -- default handler for installed servers
       function(server_name)
