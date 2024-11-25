@@ -9,10 +9,7 @@ return {
     local lspconfig = require("lspconfig")
     local mason_lspconfig = require("mason-lspconfig")
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
-
     local map = vim.keymap.set
-
-    -- used to enable autocompletion (assign to every lsp server config)
     local capabilities = cmp_nvim_lsp.default_capabilities()
 
     -- on lsp attach let's get some extra lsp-specific keybinds
@@ -42,42 +39,12 @@ return {
       end,
     })
 
+    -- note: some configuration can be in other lsp plugin files
     mason_lspconfig.setup_handlers({
       -- default handler for installed servers
       function(server_name)
         lspconfig[server_name].setup({
           capabilities = capabilities,
-        })
-      end,
-      -- configuration from https://github.com/tris203/rzls.nvim
-      ["roslyn"] = function()
-        lspconfig["roslyn"].setup({
-          config = {
-            capabilities = capabilities,
-            on_attach = require("lspattach"),
-            handlers = require("rzls.roslyn_handlers")
-          },
-          args = {
-            "--logLevel=Information",
-            "--extensionLogDirectory=" .. vim.fs.dirname(vim.lsp.get_log_path()),
-            "--razorSourceGenerator=" .. vim.fs.joinpath(
-              vim.fn.stdpath "data" --[[@as string]],
-              "mason",
-              "packages",
-              "roslyn",
-              "libexec",
-              "Microsoft.CodeAnalysis.Razor.Compiler.dll"
-            ),
-            "--razorDesignTimePath=" .. vim.fs.joinpath(
-              vim.fn.stdpath "data" --[[@as string]],
-              "mason",
-              "packages",
-              "rzls",
-              "libexec",
-              "Targets",
-              "Microsoft.NET.Sdk.Razor.DesignTime.targets"
-            ),
-          },
         })
       end,
     })

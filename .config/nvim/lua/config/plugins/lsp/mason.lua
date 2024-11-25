@@ -2,8 +2,6 @@ return {
   "williamboman/mason.nvim", -- https://github.com/williamboman/mason.nvim
   dependencies = {
     "williamboman/mason-lspconfig.nvim", -- https://github.com/williamboman/mason-lspconfig.nvim
-    -- "tris203/rzls.nvim", -- https://github.com/tris203/rzls.nvim
-    -- "seblj/roslyn.nvim", -- https://github.com/seblj/roslyn.nvim
   },
   config = function()
     local mason = require("mason")
@@ -13,7 +11,6 @@ return {
       registries = {
         "github:mason-org/mason-registry", -- default registry
         "github:Crashdummyy/mason-registry", -- dotnet registry for roslyn and rzls https://github.com/Crashdummyy/mason-registry
-        -- "github:seblj/roslyn-mason-registry", -- dotnet registry for roslny, need this too for some reason
       },
     })
 
@@ -36,9 +33,7 @@ return {
         -- "nginx_language_server",
         "powershell_es",
         "pyright",
-        "roslyn",
         "rust_analyzer",
-        -- "rzls",
         "sqls",
         "terraformls",
         "taplo",
