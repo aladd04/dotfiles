@@ -86,6 +86,8 @@ syncdots() {
   # Array of files and directories to sync
   local items=(
     ".aladd.zsh"
+    ".tmux.conf"
+    ".config/tmux/tmux.conf"
     ".config/bat/"
     ".config/eza/"
     ".config/karabiner/karabiner.json"
