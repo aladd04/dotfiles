@@ -83,6 +83,7 @@
                     },
                     {
                         "description": "Fn + H/J/K/L to Left/Down/Up/Right Arrow Keys",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {

@@ -3,3 +3,8 @@ edit = [
   { run = '${EDITOR:=nvim} "$@"', desc = "$EDIT", block = true, for = "unix" },
   { run = '${EDITOR:=code} "$@"', desc = "$CODE", block = true, for = "unix" }
 ]
+
+[manager]
+show_hidden = true
+linemode = "mtime"
+
