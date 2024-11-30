@@ -5,10 +5,11 @@ local map = vim.keymap.set
 
 map("i", "jk", "<ESC>", { desc = "Exit insert mode with jk" })
 
-map("i", "<C-h>", "<Left>", { desc = "Move left" })
-map("i", "<C-j>", "<Down>", { desc = "Move down" })
-map("i", "<C-k>", "<Up>", { desc = "Move up" })
-map("i", "<C-l>", "<Right>", { desc = "Move right" })
+-- should be take care of by karabiner mapping option + h/j/k/l into arrow keys
+-- map("i", "<C-h>", "<Left>", { desc = "Move left" })
+-- map("i", "<C-j>", "<Down>", { desc = "Move down" })
+-- map("i", "<C-k>", "<Up>", { desc = "Move up" })
+-- map("i", "<C-l>", "<Right>", { desc = "Move right" })
 
 map("n", "<C-h>", "<C-w>h", { desc = "Switch window left" })
 map("n", "<C-j>", "<C-w>j", { desc = "Switch window down" })
