@@ -15,7 +15,11 @@ return {
     roslyn.setup({
       config = {
         capabilities = capabilities,
-        -- on_attach = require("lspattach"),
+        on_attach = function(client, bufnr)
+          vim.bo[bufnr].tabstop = 4
+          vim.bo[bufnr].shiftwidth = 4
+          vim.bo[bufnr].expandtab = true
+        end,
         handlers = require("rzls.roslyn_handlers"),
       },
       args = {
