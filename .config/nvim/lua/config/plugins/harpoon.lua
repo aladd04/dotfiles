@@ -26,8 +26,8 @@ return {
 
     local map = vim.keymap.set
 
-    map("n", "<leader>hh", function() toggle_harpoon_telescope(harpoon:list()) end, { desc = "Show harpoon list" })
-    -- map("n", "<leader>hh", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, { desc = "Show harpoon list" })
+    map("n", "<leader>hf", function() toggle_harpoon_telescope(harpoon:list()) end, { desc = "Search and preview harpoon list" })
+    map("n", "<leader>hh", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, { desc = "Show harpoon list" })
     map("n", "<leader>ha", function() harpoon:list():add() end, { desc = "Add file to harpoon list" })
     map("n", "<leader>hr", function() harpoon:list():remove() end, { desc = "Remove file from harpoon list" })
     map("n", "<leader>hn", function() harpoon:list():next() end, { desc = "Navigate to next mark" })
