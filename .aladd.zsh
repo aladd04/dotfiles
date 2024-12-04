@@ -81,6 +81,73 @@ export FZF_DEFAULT_OPTS=" \
 --color=selected-bg:#45475a \
 --multi"
 
+# interactive git branch switching with fzf
+gitswitch() {
+  # check if inside a git repo
+  if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+    echo "Not a git repository"
+    return 1
+  fi
+
+  # find branches via fzf
+  local branch=$(git for-each-ref --format='%(refname:short)' refs/heads refs/remotes | fzf)
+
+  if [[ -z "$branch" ]]; then
+    echo "No branch selected"
+    return 1
+  fi
+
+  # check for remote branch
+  if [[ "$branch" == remotes/* ]]; then
+    branch=${branch#remotes/}
+  fi
+
+  # if remote, extract then pull and track, otherwise just switch to the local branch
+  if [[ "$branch" == */* ]]; then
+    local remote_name=${branch%%/*}
+    local branch_name=${branch#*/}
+    git switch --track "$remote_name/$branch_name"
+  else
+    git switch "$branch"
+  fi
+}
+
+# interactive branch deleting with fzf
+gitbranchd() {
+  git branch -D $(git branch | fzf)
+}
+
+# alias k8s tools, assumes these are installed
+alias k='kubectl'
+alias kc='kubectx'
+alias kn='kubens'
+
+# edit k8s stuff with nvim
+export KUBE_EDITOR='nvim'
+
+# sh into a k8s container, arg 1 is pod, arg 2 is container in pod
+kconnsh() {
+  kubectl exec --stdin --tty "$1" -c "$2" -- sh;
+}
+
+# restart k8s deployment
+krestart() {
+  kubectl rollout restart deployments/$1
+}
+
+# restart all k8s deployments that start with the naming convention
+krestartall() {
+  kubectl get deployments --no-headers=true | awk '/{$1}/{print $1}' | xargs -l {} kubectl rollout restart deployments/{}
+}
+
+# exec into k8s redis cli
+kredis() {
+  kubectl exec -it $1 -- redis-cli;
+}
+
+# k8s autocompletion
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+
 # dots syncing
 syncdots() {
   # Array of files and directories to sync
