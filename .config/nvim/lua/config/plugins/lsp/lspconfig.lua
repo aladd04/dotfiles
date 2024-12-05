@@ -36,6 +36,8 @@ return {
         map("n", "<leader>lk", vim.lsp.buf.hover, opts)
         opts.desc = "Restart LSP"
         map("n", "<leader>lr", ":LspRestart<CR>", opts)
+        opts.desc = "Show code actions"
+        map("n", "<leader>la", vim.lsp.buf.code_action, opts)
       end,
     })
 
