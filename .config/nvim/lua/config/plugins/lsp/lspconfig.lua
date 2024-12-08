@@ -31,11 +31,11 @@ return {
         opts.desc = "Show LSP implementations"
         map("n", "<leader>li", "<cmd>Telescope lsp_implementations<CR>", opts)
         opts.desc = "Rename symbol"
-        map("n", "<leader>lr", vim.lsp.buf.rename, opts)
+        map("n", "<leader>le", vim.lsp.buf.rename, opts)
         opts.desc = "Show documentation for symbol"
         map("n", "<leader>lk", vim.lsp.buf.hover, opts)
         opts.desc = "Restart LSP"
-        map("n", "<leader>lr", ":LspRestart<CR>", opts)
+        map("n", "<leader>lc", ":LspRestart<CR>", opts)
         opts.desc = "Show code actions"
         map("n", "<leader>la", vim.lsp.buf.code_action, opts)
       end,
