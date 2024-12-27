@@ -162,6 +162,7 @@ syncdots() {
     ".config/nvim/"
     ".config/yazi/"
     ".config/btop/"
+    ".config/ghostty/"
     ".config/starship.toml"
   )
 
