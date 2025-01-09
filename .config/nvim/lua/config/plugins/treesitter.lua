@@ -13,6 +13,7 @@ return {
       indent = {
         enable = true,
       },
+      auto_install = true,
       sync_install = false, -- allow parsers to be installed in the background
       incremental_selection = { -- allows selecting "blocks" or "scopes" of code using keybinds
         enable = true,
@@ -30,6 +31,7 @@ return {
         "c_sharp",
         "comment",
         "cpp",
+        "css",
         "csv",
         "diff",
         "dockerfile",
