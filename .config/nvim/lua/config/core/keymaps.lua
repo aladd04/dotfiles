@@ -22,4 +22,6 @@ map("n", "<leader>tq", "<cmd>tabclose<CR>", { desc = "Close current tab" })
 
 map("n", "<leader>bn", "<cmd>bn<CR>", { desc = "Go to next buffer" })
 map("n", "<leader>bp", "<cmd>bp<CR>", { desc = "Go to previous buffer" })
+map("n", "<leader>bf", "<cmd>Telescope buffers<CR>", { desc = "Search buffers" })
+map("n", "<leader>bo", "<cmd>Telescope oldfiles cwd_only=true<CR>", { desc = "Search old files in directory" })
 
