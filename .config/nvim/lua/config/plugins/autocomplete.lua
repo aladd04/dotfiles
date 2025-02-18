@@ -56,12 +56,12 @@ return {
         ["<Tab>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true, }),
       }),
       sources = cmp.config.sources({
-        { name = "luasnip" },
-        { name = "buffer" },
+        { name = "luasnip" }, -- to show completions
+        { name = "nvim_lsp" }, -- to have completions
+        -- { name = "buffer" },
         -- { name = "path" },
         -- { name = "cmdline", option = { ignore_cmds = { "Man", "!" }, }, },
-        { name = "nvim_lsp" },
-        { name = "nvim_lua" },
+        -- { name = "nvim_lua" },
         -- { name = "zsh" },
         -- { name = "html-css" },
         -- { name = "otter-ls" },
