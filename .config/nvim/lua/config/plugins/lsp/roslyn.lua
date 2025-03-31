@@ -4,6 +4,8 @@ return {
     "tris203/rzls.nvim", -- https://github.com/tris203/rzls.nvim
   },
   ft = "cs",
+  ---@module 'roslyn.config'
+  ---@type RoslynNvimConfig
   config = function()
     -- NOTE: to make this work we have to manually install "roslyn" and "rzls" in neovim with :MasonInstall
 
@@ -23,6 +25,7 @@ return {
         handlers = require("rzls.roslyn_handlers"),
       },
       args = {
+        "--stdio",
         "--logLevel=Information",
         "--extensionLogDirectory=" .. vim.fs.dirname(vim.lsp.get_log_path()),
         "--razorSourceGenerator=" .. vim.fs.joinpath(
