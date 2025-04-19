@@ -37,6 +37,9 @@ return {
           "--hidden", -- the rest is default, adding this so it searches hidden files
           "--fixed-strings", -- take the string literally without the need to escape
         },
+        file_ignore_patterns = {
+          "^%.git/"
+        },
         extensions = {
           fzf = {
           },
