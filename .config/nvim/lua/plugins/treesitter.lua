@@ -1,0 +1,26 @@
+return {
+  "nvim-treesitter/nvim-treesitter",
+  opts = {
+    ensure_installed = {
+      "angular",
+      "c_sharp",
+      "csv",
+      "dockerfile",
+      "editorconfig",
+      "gitignore",
+      "go",
+      "graphql",
+      "helm",
+      "http",
+      "kusto",
+      "make",
+      "mermaid",
+      "nginx",
+      "powershell",
+      "rust",
+      "sql",
+      "terraform",
+      "tmux",
+    },
+  },
+}
