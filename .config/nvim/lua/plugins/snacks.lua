@@ -5,10 +5,13 @@ return {
     picker = {
       hidden = true,
       ignored = true,
-      -- exclude = {
-      --   "node_modules",
-      --   ".git",
-      -- },
+      exclude = {
+        "node_modules",
+        ".git",
+        "bin",
+        "obj",
+        "dist",
+      },
     },
   },
 }
