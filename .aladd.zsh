@@ -11,7 +11,7 @@ setopt hist_verify
 
 # common tool replacements with better versions
 alias cat='bat'
-alias ls='eza -a -1 --icons=never --long --no-permissions --no-user --group-directories-first --changed --time-style=+"%m-%d-%y %I:%M%p"'
+alias ls='eza -1 --icons=never --long --no-permissions --no-user --group-directories-first  --time-style=+"%m-%d-%y %I:%M%p"'
 alias grep='rg'
 alias find='fd'
 alias cd='z'
@@ -121,6 +121,7 @@ gitbranchd() {
 alias k='kubectl'
 alias kc='kubectx'
 alias kn='kubens'
+alias mk='minikube'
 
 # edit k8s stuff with nvim
 export KUBE_EDITOR='nvim'
@@ -147,6 +148,33 @@ kredis() {
 
 # k8s autocompletion
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+
+# sh into a container in k8s minikube
+mkconnsh() {
+  minikube kubectl exec --stdin --tty "$1" -c "$2" -- sh;
+}
+
+# reads better
+reload() {
+  source ~/.zshrc
+}
+
+# i'm lazy
+gitacp() {
+  git add .
+  git commit -m "$1"
+  git push
+}
+
+# lowercase uuidgen
+uuidgenl() {
+  uuidgen | tr "[A-Z]" "[a-z]"
+}
+
+# docker-compose alias
+dc() {
+  docker compose $@
+}
 
 # dots syncing
 syncdots() {

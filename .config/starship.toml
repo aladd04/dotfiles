@@ -13,6 +13,7 @@ $directory\
 $git_branch\
 $git_status\
 [](fg:green bg:teal)\
+$dotnet\
 $c\
 $rust\
 $golang\
