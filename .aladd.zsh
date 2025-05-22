@@ -218,7 +218,7 @@ kfconnsh() {
   local container=$(kubectl get pod "$pod" -o json | jq -r '.spec.containers[].name' | fzf --height 30% --border --prompt="Select a container in $pod: ")
   [[ -z "$container" ]] && return 1
 
-  echo "kconnsh $pod $container"
+  echo "Starting interactive shell inside pod: $pod -> container: $container"
   kubectl exec --stdin --tty "$pod" -c "$container" -- sh
 }
 
