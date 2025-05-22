@@ -126,10 +126,8 @@ alias mk='minikube'
 # edit k8s stuff with nvim
 export KUBE_EDITOR='nvim'
 
-# sh into a k8s container, arg 1 is pod, arg 2 is container in pod
-kconnsh() {
-  kubectl exec --stdin --tty "$1" -c "$2" -- sh;
-}
+# k8s autocompletion
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 
 # restart k8s deployment
 krestart() {
@@ -146,8 +144,83 @@ kredis() {
   kubectl exec -it $1 -- redis-cli;
 }
 
-# k8s autocompletion
-[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+# list all containers in a pod
+kfpodcon() {
+  local pod="$1"
+
+  if [[ -z "$pod" ]]; then
+    pod=$(kubectl get pods --no-headers -o custom-columns=":metadata.name" | fzf --height 40% --border --preview 'kubectl describe pod {}')
+    [[ -z "$pod" ]] && return 1
+    echo "Containers in pod: $pod"
+  fi
+
+  {
+    echo -e "NAME\tREADY\tSTATE\tRESTARTS\tIMAGE"
+    jq -r '
+      .status.containerStatuses as $statuses |
+      .spec.containers[] as $spec |
+      ($statuses[] | select(.name == $spec.name)) as $status |
+      "\($spec.name)\t\($status.ready)\t\($status.state | to_entries[0].key)\t\($status.restartCount)\t\($spec.image)"
+    ' < <(kubectl get pod "$pod" -o json)
+  } | column -t -s $'\t' | while IFS= read -r line; do
+    echo "$line"
+    [[ -z "$printed" ]] && printf "%s\n" "${line//?/-}" && printed=1
+  done
+}
+
+# fzf kubernetes resources, example: 'kf describe pods', or 'kf edit ingress'
+kf() {
+  local action=$1
+  shift # remove the first argument
+
+  # check if the action is valid
+  if [[ "$action" != "describe" && "$action" != "edit" && "$action" != "logs" ]]; then
+    echo "Invalid action: $action. Use 'describe', 'edit', or 'logs'."
+    return 1
+  fi
+
+  # get the list of resources and check if it is empty
+  local resources=$(kubectl get $1 -o jsonpath='{range .items[*]}{.metadata.namespace}{"\t"}{.metadata.name}{"\n"}')
+  if [[ -z "$resources" ]]; then
+    echo "No resources found for $1."
+    return 1
+  fi
+
+  # proceed with fzf if resources are found
+  echo "$resources" | fzf --preview="echo '{}' | xargs kubectl describe $1 -n" | xargs kubectl $action $1 -n
+}
+
+# fzf kubernetes logs
+kflog() {
+  # get the selected pod in the current context/namespace using fzf
+  local pod=$(kubectl get pods --no-headers -o custom-columns=":metadata.name" | fzf --height 40% --border --preview 'kubectl describe pod {1}')
+  
+  # if a pod is selected, retrieve logs and pipe them into fzf for interactive filtering
+  if [ -n "$pod" ]; then
+    kubectl logs "$pod" | fzf --height 90% --border --preview 'echo {} | fold -w 80'
+  else
+    echo "No pod selected."
+  fi
+}
+
+# sh into a k8s container, arg 1 is pod, arg 2 is container in pod
+kconnsh() {
+  kubectl exec --stdin --tty "$1" -c "$2" -- sh;
+}
+
+# using fzf interactively sh into a k8s container
+kfconnsh() {
+  # Step 1: Select pod
+  local pod=$(kubectl get pods --no-headers -o custom-columns=":metadata.name" | fzf --height 40% --border --prompt='Select a pod: ' --preview 'kubectl describe pod {}')
+  [[ -z "$pod" ]] && return 1
+
+  # Step 2: Select container from that pod
+  local container=$(kubectl get pod "$pod" -o json | jq -r '.spec.containers[].name' | fzf --height 30% --border --prompt="Select a container in $pod: ")
+  [[ -z "$container" ]] && return 1
+
+  echo "kconnsh $pod $container"
+  kubectl exec --stdin --tty "$pod" -c "$container" -- sh
+}
 
 # sh into a container in k8s minikube
 mkconnsh() {
