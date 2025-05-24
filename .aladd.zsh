@@ -294,3 +294,9 @@ eval "$(starship init zsh)"
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # zsh syntax highlighting
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# TODO: does not work
+# source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
+# 1password cli auto completion
+eval "$(op completion zsh)"; #compdef _op op
+
