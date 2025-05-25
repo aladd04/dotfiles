@@ -3,7 +3,6 @@ return {
   opts = {
     ensure_installed = {
       "c_sharp",
-      "csv",
       "editorconfig",
       "gitignore",
       "helm",
