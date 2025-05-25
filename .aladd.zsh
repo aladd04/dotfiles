@@ -1,5 +1,6 @@
-# enable fzf-tab https://github.com/Aloxaf/fzf-tab
-source ~/git-tools/fzf-tab/fzf-tab.plugin.zsh
+# enable zsh auto completions
+autoload -Uz compinit
+compinit
 
 # history settings
 HISTSIZE=999
@@ -285,6 +286,9 @@ syncdots() {
   fi
 }
 
+# enable fzf-tab https://github.com/Aloxaf/fzf-tab
+source ~/git-tools/fzf-tab/fzf-tab.plugin.zsh
+
 # zoxide
 eval "$(zoxide init zsh)"
 # starship
@@ -321,10 +325,6 @@ zstyle ':fzf-tab:*' switch-group '<' '>'
 zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 zstyle ':fzf-tab:complete:cd:*' popup-pad 30 0
-
-# enable zsh auto completions
-autoload -Uz compinit
-compinit
 
 # 1password cli auto completion
 eval "$(op completion zsh)"
