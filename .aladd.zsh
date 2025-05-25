@@ -1,3 +1,6 @@
+# docker cli completions
+fpath=(/Users/aladd04/.docker/completions $fpath)
+
 # enable zsh auto completions
 autoload -Uz compinit
 compinit
@@ -329,4 +332,8 @@ zstyle ':fzf-tab:complete:cd:*' popup-pad 30 0
 # 1password cli auto completion
 eval "$(op completion zsh)"
 compdef _op op
+
+# exoprts that got added by tools I installed
+export PATH="$PATH:/Users/aladd04/.lmstudio/bin"
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 
