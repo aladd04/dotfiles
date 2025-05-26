@@ -1,7 +1,7 @@
 [opener]
 edit = [
   { run = '${EDITOR:=nvim} "$@"', desc = "$EDIT", block = true, for = "unix" },
-  { run = '${EDITOR:=code} "$@"', desc = "$CODE", block = true, for = "unix" }
+  { run = '${EDITOR:=code} "$@"', desc = "$CODE", block = true, for = "unix" },
 ]
 
 [manager]
@@ -11,4 +11,3 @@ sort_dir_first = true
 show_symlink = true
 show_hidden = true
 linemode = "mtime"
-
