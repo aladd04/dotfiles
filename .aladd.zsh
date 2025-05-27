@@ -1,6 +1,3 @@
-# docker cli completions
-fpath=(/Users/aladd04/.docker/completions $fpath)
-
 # enable zsh auto completions
 autoload -Uz compinit
 compinit
@@ -350,10 +347,9 @@ _dotnet_zsh_complete()
 
 # dotnet
 compdef _dotnet_zsh_complete dotnet
-# 1passord
+# 1password
 compdef _op op
 
-# exoprts that got added by tools I installed
-export PATH="$PATH:/Users/aladd04/.lmstudio/bin"
+# exports that got added by tools I installed
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 
