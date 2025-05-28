@@ -350,6 +350,3 @@ compdef _dotnet_zsh_complete dotnet
 # 1password
 compdef _op op
 
-# exports that got added by tools I installed
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-
