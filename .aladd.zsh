@@ -16,6 +16,7 @@ alias grep='rg'
 alias find='fd'
 alias cd='z'
 alias vim='nvim'
+alias vi='nvim'
 alias v='nvim'
 alias gitui='lazygit --use-config-file="$HOME/Library/Application Support/lazygit/config.yml,$HOME/.config/lazygit/catppuccin-mocha-blue.yml"'
 
@@ -255,6 +256,7 @@ syncdots() {
   local items=(
     ".aladd.zsh"
     ".tmux.conf"
+    ".vimrc"
     ".config/tmux/tmux.conf"
     ".config/bat/"
     ".config/eza/"
