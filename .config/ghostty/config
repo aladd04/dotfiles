@@ -1,5 +1,5 @@
-theme = catppuccin-mocha
+theme = catppuccin-mocha.conf
 
-font-size = 13
+font-size = 14
 font-family = MonaspiceNe Nerd Font
 
