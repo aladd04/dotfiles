@@ -4,4 +4,6 @@
 
 local map = vim.keymap.set
 
-map("x", "<leader>p", '"_dP', { desc = "Better Paste" })
+map("x", "<leader>p", '"_dP', { desc = "Better Paste", noremap = true })
+map("n", "<C-u>", "<C-u>zz", { desc = "Ctrl-u and Center", noremap = true })
+map("n", "<C-d>", "<C-d>zz", { desc = "Ctrl-d and Center", noremap = true })

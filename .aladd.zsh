@@ -15,6 +15,7 @@ alias ls='eza -1 --icons=never --long --no-permissions --no-user --group-directo
 alias grep='rg'
 alias find='fd'
 alias cd='z'
+alias cdh='z ~'
 alias vim='nvim'
 alias vi='nvim'
 alias v='nvim'
