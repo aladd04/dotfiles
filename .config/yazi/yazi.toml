@@ -4,7 +4,7 @@ edit = [
   { run = '${EDITOR:=code} "$@"', desc = "$CODE", block = true, for = "unix" },
 ]
 
-[manager]
+[mgr]
 sort_by = "alphabetical"
 sort_sensitive = false
 sort_dir_first = true
