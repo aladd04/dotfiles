@@ -196,13 +196,22 @@ kf() {
 kflog() {
   # get the selected pod in the current context/namespace using fzf
   local pod=$(kubectl get pods --no-headers -o custom-columns=":metadata.name" | fzf --height 40% --border --preview 'kubectl describe pod {1}')
-  
-  # if a pod is selected, retrieve logs and pipe them into fzf for interactive filtering
-  if [ -n "$pod" ]; then
-    kubectl logs "$pod" | fzf --height 90% --border --preview 'echo {} | fold -w 80'
-  else
+
+  if [ -z "$pod" ]; then
     echo "No pod selected."
+    return
   fi
+
+  # get the selected container in the chosen pod
+  local container=$(kubectl get pod "$pod" -o jsonpath='{.spec.containers[*].name}' | tr ' ' '\n' | fzf --height 20% --border --prompt="Select container: ")
+
+  if [ -z "$container" ]; then
+    echo "No container selected."
+    return
+  fi
+
+  # if selected, show logs for the pod & container chosen
+  kubectl logs "$pod" -c "$container" | fzf --height 90% --border --preview 'echo {} | fold -w 80'
 }
 
 # sh into a k8s container, arg 1 is pod, arg 2 is container in pod
