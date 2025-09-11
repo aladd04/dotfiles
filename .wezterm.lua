@@ -15,6 +15,11 @@ config.enable_tab_bar = false
 config.leader = { key = "b", mods = "CTRL", timeout_milliseconds = 5000 }
 config.keys = {
 	{
+		key = "b",
+		mods = "LEADER|CTRL",
+		action = wezterm.action.SendKey({ key = "b", mods = "CTRL" }),
+	},
+	{
 		key = "\\",
 		mods = "LEADER",
 		action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }),
