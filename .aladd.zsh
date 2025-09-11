@@ -362,3 +362,7 @@ compdef _dotnet_zsh_complete dotnet
 # 1password
 compdef _op op
 
+# wezterm
+PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
+export PATH
+
