@@ -301,10 +301,20 @@ dc() {
 # enable fzf-tab https://github.com/Aloxaf/fzf-tab
 source ~/git-tools/fzf-tab/fzf-tab.plugin.zsh
 
+# vim mode for cli
+set -o vi
+
 # zoxide
 eval "$(zoxide init zsh)"
-# starship
-eval "$(starship init zsh)"
+
+# check if starship is already loaded before running this again
+# fixes bug: https://github.com/starship/starship/issues/5522#issuecomment-2155980190
+type starship_zle-keymap-select >/dev/null || \
+{
+  echo "Load starship"
+  eval "$(starship init zsh)"
+}
+
 # zsh auto suggestions
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # zsh syntax highlighting
