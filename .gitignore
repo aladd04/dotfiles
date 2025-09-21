@@ -1,1 +1,5 @@
 .DS_Store
+
+# Ignore tmux plugin manager (tpm) plugins
+/.config/tmux/plugins/
+

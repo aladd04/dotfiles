@@ -261,50 +261,60 @@ dc() {
 }
 
 # dots syncing
-syncdots() {
-  # Array of files and directories to sync
-  local items=(
-    ".aladd.zsh"
-    ".tmux.conf"
-    ".vimrc"
-    ".config/tmux/tmux.conf"
-    ".config/bat/"
-    ".config/eza/"
-    ".config/karabiner/karabiner.json"
-    ".config/lazygit/"
-    ".config/nvim/"
-    ".config/yazi/"
-    ".config/btop/"
-    ".config/ghostty/"
-    ".config/starship.toml"
-  )
-
-  # Check the argument
-  if [[ $1 == "push" ]]; then
-    for item in "${items[@]}"; do
-      local src="$HOME/$item"
-      local dest="$HOME/.dotfiles/$item"
-      rsync -a "$src" "$dest"
-    done
-  elif [[ $1 == "pull" ]]; then
-    for item in "${items[@]}"; do
-      local src="$HOME/.dotfiles/$item"
-      local dest="$HOME/$item"
-      rsync -a "$src" "$dest"
-    done
-  else
-    echo "Usage: syncdots [push|pull]"
-    return 1
-  fi
-}
+# syncdots() {
+#   # Array of files and directories to sync
+#   local items=(
+#     ".aladd.zsh"
+#     ".tmux.conf"
+#     ".vimrc"
+#     ".config/tmux/tmux.conf"
+#     ".config/bat/"
+#     ".config/eza/"
+#     ".config/karabiner/karabiner.json"
+#     ".config/lazygit/"
+#     ".config/nvim/"
+#     ".config/yazi/"
+#     ".config/btop/"
+#     ".config/ghostty/"
+#     ".config/starship.toml"
+#   )
+#
+#   # Check the argument
+#   if [[ $1 == "push" ]]; then
+#     for item in "${items[@]}"; do
+#       local src="$HOME/$item"
+#       local dest="$HOME/.dotfiles/$item"
+#       rsync -a "$src" "$dest"
+#     done
+#   elif [[ $1 == "pull" ]]; then
+#     for item in "${items[@]}"; do
+#       local src="$HOME/.dotfiles/$item"
+#       local dest="$HOME/$item"
+#       rsync -a "$src" "$dest"
+#     done
+#   else
+#     echo "Usage: syncdots [push|pull]"
+#     return 1
+#   fi
+# }
 
 # enable fzf-tab https://github.com/Aloxaf/fzf-tab
 source ~/git-tools/fzf-tab/fzf-tab.plugin.zsh
 
+# vim mode for cli
+set -o vi
+
 # zoxide
 eval "$(zoxide init zsh)"
-# starship
-eval "$(starship init zsh)"
+
+# check if starship is already loaded before running this again
+# fixes bug: https://github.com/starship/starship/issues/5522#issuecomment-2155980190
+type starship_zle-keymap-select >/dev/null || \
+{
+  echo "Load starship"
+  eval "$(starship init zsh)"
+}
+
 # zsh auto suggestions
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # zsh syntax highlighting
@@ -361,4 +371,8 @@ _dotnet_zsh_complete()
 compdef _dotnet_zsh_complete dotnet
 # 1password
 compdef _op op
+
+# wezterm
+PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
+export PATH
 
