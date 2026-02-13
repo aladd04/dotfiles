@@ -305,7 +305,7 @@ source ~/git-tools/fzf-tab/fzf-tab.plugin.zsh
 set -o vi
 
 # zoxide
-eval "$(zoxide init zsh)"
+# eval "$(zoxide init zsh)"
 
 # check if starship is already loaded before running this again
 # fixes bug: https://github.com/starship/starship/issues/5522#issuecomment-2155980190
