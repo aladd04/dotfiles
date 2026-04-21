@@ -20,6 +20,7 @@ alias vim='nvim'
 alias vi='nvim'
 alias v='nvim'
 alias gitui='lazygit --use-config-file="$HOME/Library/Application Support/lazygit/config.yml,$HOME/.config/lazygit/catppuccin-mocha-blue.yml"'
+alias claudee='claude --dangerously-skip-permissions'
 
 # check ports in us
 alias portcheck='lsof -i -n -P'
@@ -194,25 +195,81 @@ kf() {
 
 # fzf kubernetes logs
 kflog() {
-  # get the selected pod in the current context/namespace using fzf
-  local pod=$(kubectl get pods --no-headers -o custom-columns=":metadata.name" | fzf --height 40% --border --preview 'kubectl describe pod {1}')
+  local mode="default" # default | all | from_start
 
-  if [ -z "$pod" ]; then
-    echo "No pod selected."
-    return
+  # Only 0 or 1 flag allowed
+  if (( $# > 1 )); then
+    echo "Usage: kflog [-a|--from-start]"
+    return 1
   fi
 
-  # get the selected container in the chosen pod
-  local container=$(kubectl get pod "$pod" -o jsonpath='{.spec.containers[*].name}' | tr ' ' '\n' | fzf --height 20% --border --prompt="Select container: ")
+  case "${1:-}" in
+    "") mode="default" ;;
+    -a|--all) mode="all" ;;
+    --from-start) mode="from_start" ;;
+    *)
+      echo "Unknown option: $1"
+      echo "Usage: kflog [-a|--from-start]"
+      return 1
+      ;;
+  esac
 
-  if [ -z "$container" ]; then
-    echo "No container selected."
-    return
-  fi
+  local pod container
+  pod=$(kubectl get pods --no-headers -o custom-columns=':metadata.name' \
+    | fzf --height 40% --border --preview 'kubectl describe pod {1}')
+  [[ -z "$pod" ]] && echo "No pod selected." && return 1
 
-  # if selected, show logs for the pod & container chosen
-  kubectl logs "$pod" -c "$container" | fzf --height 90% --border --preview 'echo {} | fold -w 80'
+  container=$(kubectl get pod "$pod" -o jsonpath='{.spec.containers[*].name}' \
+    | tr ' ' '\n' \
+    | fzf --height 20% --border --prompt='Select container: ')
+  [[ -z "$container" ]] && echo "No container selected." && return 1
+
+  local -a log_args=(logs "$pod" -c "$container")
+  local -a order_args=()
+
+  case "$mode" in
+    default)
+      log_args+=(--tail=300)
+      order_args=(--tac)       # newest first
+      ;;
+    all)
+      log_args+=(--tail=-1)
+      order_args=(--tac)       # newest first
+      ;;
+    from_start)
+      log_args+=(--tail=-1)
+      order_args=(--no-tac)    # oldest first
+      ;;
+  esac
+
+  kubectl "${log_args[@]}" \
+    | FZF_DEFAULT_OPTS= fzf --height 90% --border \
+        --no-sort --layout=default --bind 'start:top' \
+        "${order_args[@]}" \
+        --preview 'echo {} | fold -w 120'
 }
+
+# fzf kubernetes logs
+# kflog() {
+#   # get the selected pod in the current context/namespace using fzf
+#   local pod=$(kubectl get pods --no-headers -o custom-columns=":metadata.name" | fzf --height 40% --border --preview 'kubectl describe pod {1}')
+#
+#   if [ -z "$pod" ]; then
+#     echo "No pod selected."
+#     return
+#   fi
+#
+#   # get the selected container in the chosen pod
+#   local container=$(kubectl get pod "$pod" -o jsonpath='{.spec.containers[*].name}' | tr ' ' '\n' | fzf --height 20% --border --prompt="Select container: ")
+#
+#   if [ -z "$container" ]; then
+#     echo "No container selected."
+#     return
+#   fi
+#
+#   # if selected, show logs for the pod & container chosen
+#   kubectl logs "$pod" -c "$container" | fzf --height 90% --border --preview 'echo {} | fold -w 80'
+# }
 
 # sh into a k8s container, arg 1 is pod, arg 2 is container in pod
 kconnsh() {
@@ -305,7 +362,8 @@ source ~/git-tools/fzf-tab/fzf-tab.plugin.zsh
 set -o vi
 
 # zoxide
-# eval "$(zoxide init zsh)"
+export _ZO_DOCTOR=0
+eval "$(zoxide init zsh)"
 
 # check if starship is already loaded before running this again
 # fixes bug: https://github.com/starship/starship/issues/5522#issuecomment-2155980190
