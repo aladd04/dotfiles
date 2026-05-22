@@ -8,7 +8,7 @@
 # Sections are alphabetical for scannability.
 
 # ---- core CLI ---------------------------------------------------------------
-brew "1password-cli"             # `op` — completion sourced in .aladd.zsh
+# brew "1password-cli"             # `op` — completion sourced in .aladd.zsh
 brew "bat"                       # cat replacement, used as `cat` alias
 brew "btop"                      # system monitor
 brew "eza"                       # ls replacement, used as `ls` alias
