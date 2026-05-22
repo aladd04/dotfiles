@@ -18,7 +18,7 @@ SHELL := /usr/bin/env bash
 DOTFILES_DIR := $(shell pwd)
 
 .PHONY: help bootstrap deps link unlink relink zshrc post-install tpm fzf-tab fzf-shell cship doctor \
-        uninstall uninstall-deps uninstall-clones uninstall-cship uninstall-state
+        fix-stow uninstall uninstall-deps uninstall-clones uninstall-cship uninstall-state
 
 help: ## show this help
 	@awk 'BEGIN {FS = ":.*##"; printf "Targets:\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
@@ -47,6 +47,14 @@ unlink: ## remove the symlinks stow created
 	stow --target=$$HOME --dir=$(DOTFILES_DIR) --delete .
 
 relink: unlink link ## unlink then re-stow (handy after rearranging files)
+
+fix-stow: ## remove known installer droppings in $HOME that block stow, then re-link
+	@for f in $$HOME/.config/cship.toml $$HOME/.config/cship/sample-context.json; do \
+	  if [ -e $$f ] && [ ! -L $$f ]; then \
+	    echo "Removing real file blocking stow: $$f"; rm -f $$f; \
+	  fi; \
+	done
+	@$(MAKE) link
 
 zshrc: ## copy .zshrc-example to ~/.zshrc — only if ~/.zshrc doesn't already exist
 	@if [ -e $$HOME/.zshrc ]; then \

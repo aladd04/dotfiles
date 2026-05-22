@@ -62,6 +62,16 @@ cask "ghostty"
 
 If you want to undo just the symlinks: `make unlink`.
 
+## Troubleshooting: "stow link failed" / `make bootstrap` partially worked
+
+If a previous bootstrap ran post-install steps before stow successfully created symlinks (e.g. because deps or link failed mid-run), some installers — notably cship — drop real files at the same paths the repo wants to symlink. Stow then refuses to overwrite them and aborts.
+
+Quick fix:
+```
+make fix-stow
+```
+That removes the known installer droppings (`~/.config/cship.toml`, `~/.config/cship/sample-context.json`) and re-runs `make link`. Then `make bootstrap` again to finish anything still pending.
+
 ## Clean-slate uninstall (try again)
 
 If a bootstrap didn't go right and you want to retry from scratch:
