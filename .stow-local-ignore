@@ -29,3 +29,6 @@ _darcs
 ^/Makefile
 ^/Brewfile
 ^/iterm2
+
+# .zshrc-example is copied into $HOME by `make zshrc`, not symlinked
+^/.zshrc-example

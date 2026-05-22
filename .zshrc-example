@@ -1,0 +1,8 @@
+# source custom extensions
+source ~/.aladd.zsh
+
+# zoxide
+eval "$(zoxide init zsh)"
+
+export EDITOR=nvim
+

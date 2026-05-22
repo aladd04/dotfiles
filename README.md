@@ -32,7 +32,8 @@ make bootstrap
 That runs, in order:
 1. `make deps` — `brew bundle install --file=Brewfile`
 2. `make link` — `stow` this repo into `$HOME`
-3. `make post-install` — clones tpm + fzf-tab, wires fzf shell hooks, installs cship
+3. `make zshrc` — copies `.zshrc-example` → `~/.zshrc` if no `~/.zshrc` exists (won't clobber an existing one)
+4. `make post-install` — clones tpm + fzf-tab, wires fzf shell hooks, installs cship
 
 Then open a new shell:
 ```

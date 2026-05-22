@@ -8,7 +8,6 @@
 # Sections are alphabetical for scannability.
 
 # ---- core CLI ---------------------------------------------------------------
-# brew "1password-cli"             # `op` — completion sourced in .aladd.zsh
 brew "bat"                       # cat replacement, used as `cat` alias
 brew "btop"                      # system monitor
 brew "eza"                       # ls replacement, used as `ls` alias
@@ -32,6 +31,7 @@ brew "zsh-syntax-highlighting"   # sourced in .aladd.zsh
 cask "wezterm"
 
 # ---- mac apps ---------------------------------------------------------------
+cask "1password-cli"             # `op` — completion sourced in .aladd.zsh (distributed as cask, not formula)
 cask "karabiner-elements"        # keyboard remapper, config in .config/karabiner/
 
 # ---- intentionally NOT here -------------------------------------------------

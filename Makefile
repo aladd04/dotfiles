@@ -17,14 +17,22 @@
 SHELL := /usr/bin/env bash
 DOTFILES_DIR := $(shell pwd)
 
-.PHONY: help bootstrap deps link unlink relink post-install tpm fzf-tab fzf-shell cship doctor \
+.PHONY: help bootstrap deps link unlink relink zshrc post-install tpm fzf-tab fzf-shell cship doctor \
         uninstall uninstall-deps uninstall-clones uninstall-cship uninstall-state
 
 help: ## show this help
 	@awk 'BEGIN {FS = ":.*##"; printf "Targets:\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
 
-bootstrap: deps link post-install ## full setup: deps + link + post-install (requires brew + git already installed)
-	@printf '\n\033[1;32m✓ bootstrap complete\033[0m — open a new shell or run: exec zsh -l\n'
+bootstrap: ## full setup: deps + link + zshrc + post-install (requires brew + git already installed)
+	@DEPS_FAILED=0; LINK_FAILED=0; \
+	  $(MAKE) deps || DEPS_FAILED=1; \
+	  $(MAKE) link || LINK_FAILED=1; \
+	  $(MAKE) zshrc; \
+	  $(MAKE) post-install; \
+	  printf '\n'; \
+	  if [ "$$DEPS_FAILED" = "1" ]; then printf '\033[1;33m⚠ some brew deps failed\033[0m — see the `deps` output above; fix Brewfile and rerun `make deps`\n'; fi; \
+	  if [ "$$LINK_FAILED" = "1" ]; then printf '\033[1;33m⚠ stow link failed\033[0m — resolve conflicts and rerun `make link`\n'; fi; \
+	  printf '\033[1;32m✓ bootstrap complete\033[0m — open a new shell or run: exec zsh -l\n'
 
 deps: ## install everything listed in Brewfile (idempotent)
 	@command -v brew >/dev/null 2>&1 || { echo "brew not found — see README \"Prerequisites\" before running this"; exit 1; }
@@ -32,21 +40,39 @@ deps: ## install everything listed in Brewfile (idempotent)
 
 link: ## stow this repo into $HOME (creates symlinks)
 	@command -v stow >/dev/null 2>&1 || { echo "stow not found — run 'make deps' first"; exit 1; }
-	stow --target=$$HOME --dir=$(dir $(DOTFILES_DIR)) --stow $(notdir $(patsubst %/,%,$(DOTFILES_DIR)))
+	stow --target=$$HOME --dir=$(DOTFILES_DIR) --stow .
 
 unlink: ## remove the symlinks stow created
 	@command -v stow >/dev/null 2>&1 || { echo "stow not found"; exit 1; }
-	stow --target=$$HOME --dir=$(dir $(DOTFILES_DIR)) --delete $(notdir $(patsubst %/,%,$(DOTFILES_DIR)))
+	stow --target=$$HOME --dir=$(DOTFILES_DIR) --delete .
 
 relink: unlink link ## unlink then re-stow (handy after rearranging files)
+
+zshrc: ## copy .zshrc-example to ~/.zshrc — only if ~/.zshrc doesn't already exist
+	@if [ -e $$HOME/.zshrc ]; then \
+	  echo "~/.zshrc already exists — leaving it alone (delete it manually if you want the example installed)"; \
+	else \
+	  echo "Copying .zshrc-example → ~/.zshrc..."; \
+	  cp $(DOTFILES_DIR)/.zshrc-example $$HOME/.zshrc; \
+	fi
 
 post-install: tpm fzf-tab fzf-shell cship ## run all non-brew bootstrap steps
 
 tpm: ## clone tmux plugin manager and install declared plugins
 	@TPM_DIR=$$HOME/.config/tmux/plugins/tpm; \
 	  if [ -d $$TPM_DIR/.git ]; then echo "tpm already cloned"; \
-	  else git clone https://github.com/tmux-plugins/tpm $$TPM_DIR; fi; \
-	  $$TPM_DIR/bin/install_plugins || true
+	  else git clone https://github.com/tmux-plugins/tpm $$TPM_DIR; fi
+	@TPM_DIR=$$HOME/.config/tmux/plugins/tpm; \
+	  if tmux info >/dev/null 2>&1; then \
+	    echo "Reusing running tmux server for plugin install..."; \
+	    $$TPM_DIR/bin/install_plugins; \
+	  else \
+	    echo "Starting transient tmux server for plugin install..."; \
+	    tmux new-session -d -s _tpm_bootstrap 2>/dev/null || true; \
+	    $$TPM_DIR/bin/install_plugins \
+	      || echo "tpm install failed — open tmux and press 'prefix + I' to install plugins"; \
+	    tmux kill-session -t _tpm_bootstrap 2>/dev/null || true; \
+	  fi
 
 fzf-tab: ## clone Aloxaf/fzf-tab into ~/git-tools (path referenced by .aladd.zsh)
 	@FZF_TAB_DIR=$$HOME/git-tools/fzf-tab; \
