@@ -15,6 +15,7 @@ brew "eza"                       # ls replacement, used as `ls` alias
 brew "fastfetch"                 # system info / fetch tool
 brew "fd"                        # find replacement, used by fzf for path gen
 brew "fzf"                       # fuzzy finder (shell hooks installed in post-install)
+brew "git"                       # managed git (replaces the one bundled with Xcode CLT)
 brew "jq"                        # JSON tool, used by k8s helper functions
 brew "lazygit"                   # git TUI
 brew "neovim"                    # editor; LazyVim bootstraps itself on first launch

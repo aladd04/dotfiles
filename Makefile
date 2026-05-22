@@ -1,8 +1,13 @@
 # Bootstrap entry point for aladd's dotfiles.
 # macOS only for MVP. Linux support is on the roadmap (see .plans/).
 #
-# Quick start on a fresh Mac:
-#   git clone <repo> ~/.dotfiles && cd ~/.dotfiles && make bootstrap
+# Prerequisites (one-time, before running anything in this file):
+#   1. Install Homebrew  — see README "Prerequisites"
+#   2. Install git via brew (or use the one that ships with Xcode CLT)
+#   3. Clone this repo
+#
+# Quick start once prereqs are met:
+#   cd ~/.dotfiles && make bootstrap
 #
 # Day-to-day:
 #   make deps        # re-run after editing Brewfile
@@ -11,27 +16,18 @@
 
 SHELL := /usr/bin/env bash
 DOTFILES_DIR := $(shell pwd)
-HOMEBREW_INSTALL_URL := https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
 
-.PHONY: help bootstrap brew deps link unlink relink post-install tpm fzf-tab fzf-shell cship doctor \
+.PHONY: help bootstrap deps link unlink relink post-install tpm fzf-tab fzf-shell cship doctor \
         uninstall uninstall-deps uninstall-clones uninstall-cship uninstall-state
 
 help: ## show this help
 	@awk 'BEGIN {FS = ":.*##"; printf "Targets:\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
 
-bootstrap: brew deps link post-install ## full setup: brew + deps + link + post-install
+bootstrap: deps link post-install ## full setup: deps + link + post-install (requires brew + git already installed)
 	@printf '\n\033[1;32m✓ bootstrap complete\033[0m — open a new shell or run: exec zsh -l\n'
 
-brew: ## install Homebrew if missing
-	@if command -v brew >/dev/null 2>&1; then \
-	  echo "Homebrew already installed: $$(brew --version | head -n1)"; \
-	else \
-	  echo "Installing Homebrew..."; \
-	  /bin/bash -c "$$(curl -fsSL $(HOMEBREW_INSTALL_URL))"; \
-	fi
-
 deps: ## install everything listed in Brewfile (idempotent)
-	@command -v brew >/dev/null 2>&1 || { echo "brew not found — run 'make brew' first"; exit 1; }
+	@command -v brew >/dev/null 2>&1 || { echo "brew not found — see README \"Prerequisites\" before running this"; exit 1; }
 	brew bundle install --file=$(DOTFILES_DIR)/Brewfile
 
 link: ## stow this repo into $HOME (creates symlinks)
@@ -121,7 +117,7 @@ uninstall-state: ## wipe tool runtime state (nvim plugins+cache+shada, tmux resu
 
 doctor: ## sanity check — list which expected tools are on PATH
 	@printf '\nChecking PATH for expected tools (✓ found, ✗ missing):\n'
-	@for cmd in brew stow bat eza fd rg fzf zoxide jq tmux nvim btop starship yazi lazygit op; do \
+	@for cmd in brew git stow bat eza fd rg fzf zoxide jq tmux nvim btop starship yazi lazygit fastfetch op; do \
 	  if command -v $$cmd >/dev/null 2>&1; then printf '  \033[32m✓\033[0m %s\n' $$cmd; \
 	  else printf '  \033[31m✗\033[0m %s\n' $$cmd; fi; \
 	done
