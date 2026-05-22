@@ -2,21 +2,24 @@ aladd04's dotfiles
 
 ## Prerequisites (fresh macOS)
 
-You can't clone this repo without git, and you can't `brew install git` without Homebrew. So these two steps happen before the Makefile gets involved:
+The Makefile can't bootstrap Homebrew or git itself — you need both before you can even clone this repo and read the Brewfile. Run these three steps manually first:
 
 **1. Install Homebrew.** From [brew.sh](https://brew.sh):
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
-The Homebrew installer also installs the Xcode Command Line Tools, which includes a `git` binary. That's enough to clone this repo.
 
-**2. (Optional but recommended) Install a managed git via brew.** The Xcode CLT git works, but it's tied to macOS updates. The Brewfile installs `git` so it stays managed alongside the rest of your tools — `brew bundle install` will pick it up automatically when you run `make bootstrap` below.
-
-**3. Add Homebrew to your shell PATH.** The Homebrew installer prints the exact commands at the end — typically:
+**2. Add Homebrew to your shell PATH.** The Homebrew installer prints the exact commands at the end — typically:
 ```
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
 ```
+
+**3. Install git.**
+```
+brew install git
+```
+(The Xcode Command Line Tools that Homebrew pulls in also include a `git`, but installing it via brew keeps it managed alongside everything else and is what we use going forward.)
 
 ## Quick start
 
