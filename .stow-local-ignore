@@ -24,3 +24,8 @@ _darcs
 
 # plan artifacts (repo-only, not symlinked into $HOME)
 ^/.plans
+
+# bootstrap / repo-only files (not symlinked into $HOME)
+^/Makefile
+^/Brewfile
+^/iterm2
