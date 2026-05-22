@@ -39,7 +39,22 @@ cask "ghostty"
 
 `make link` is idempotent — re-run it any time you add a new file under `.config/` or a new top-level dotfile, and stow will create the new symlinks.
 
-If you ever want to undo: `make unlink`.
+If you want to undo just the symlinks: `make unlink`.
+
+## Clean-slate uninstall (try again)
+
+If a bootstrap didn't go right and you want to retry from scratch:
+```
+make uninstall            # prompts for confirmation
+make uninstall FORCE=1    # skip the prompt
+```
+That removes the stow symlinks, `brew uninstall`s everything in `Brewfile` (including casks like wezterm/karabiner — their app binaries go with them), deletes the tpm + fzf-tab clones, removes the `cship` binary if present, and wipes tool-level runtime state (nvim plugins/Mason LSPs/cache/shada, tmux resurrect, zoxide db, bat cache, yazi state). Homebrew itself and macOS `~/Library/Application Support/*` entries are left alone — if you want a true factory reset of karabiner/wezterm/lazygit app state, remove those manually.
+
+Selective wipes if you only want part of it:
+- `make uninstall-deps` — only the Brewfile packages
+- `make uninstall-clones` — only the tpm + fzf-tab dirs
+- `make uninstall-cship` — only cship
+- `make uninstall-state` — only tool runtime state (nvim cache etc.)
 
 After pulling, also source the custom zsh config in your current shell:
 ```
