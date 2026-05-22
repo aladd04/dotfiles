@@ -14,9 +14,12 @@ brew "eza"                       # ls replacement, used as `ls` alias
 brew "fastfetch"                 # system info / fetch tool
 brew "fd"                        # find replacement, used by fzf for path gen
 brew "fzf"                       # fuzzy finder (shell hooks installed in post-install)
+brew "go"                        # runtime for Mason-installed Go LSPs/formatters (goimports, gofumpt)
 brew "jq"                        # JSON tool, used by k8s helper functions
 brew "lazygit"                   # git TUI
 brew "neovim"                    # editor; LazyVim bootstraps itself on first launch
+brew "node"                      # runtime + npm for Mason-installed JS/TS tools (bash-language-server, markdownlint-cli2, markdown-toc)
+brew "python"                    # python 3.10+ for Mason-installed Python tools (sqlfluff); macOS-shipped 3.9 is too old
 brew "ripgrep"                   # grep replacement, used as `grep` alias
 brew "starship"                  # shell prompt
 brew "stow"                      # symlink manager — used by `make link`

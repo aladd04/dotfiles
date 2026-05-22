@@ -151,7 +151,7 @@ uninstall-state: ## wipe tool runtime state (nvim plugins+cache+shada, tmux resu
 
 doctor: ## sanity check — list which expected tools are on PATH
 	@printf '\nChecking PATH for expected tools (✓ found, ✗ missing):\n'
-	@for cmd in brew git stow bat eza fd rg fzf zoxide jq tmux nvim btop starship yazi lazygit fastfetch op; do \
+	@for cmd in brew git stow bat eza fd rg fzf zoxide jq tmux nvim btop starship yazi lazygit fastfetch op node npm go python3; do \
 	  if command -v $$cmd >/dev/null 2>&1; then printf '  \033[32m✓\033[0m %s\n' $$cmd; \
 	  else printf '  \033[31m✗\033[0m %s\n' $$cmd; fi; \
 	done
