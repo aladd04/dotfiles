@@ -34,12 +34,15 @@ brew "zsh-syntax-highlighting"   # sourced in .aladd.zsh
 # cask "ghostty"
 cask "wezterm"
 
+# ---- fonts ------------------------------------------------------------------
+cask "font-monaspace"            # base Monaspace family
+cask "font-monaspace-nerd-font"  # Nerd Font variant — what wezterm/ghostty configs reference ("MonaspiceNe Nerd Font")
+
 # ---- mac apps ---------------------------------------------------------------
 cask "1password-cli"             # `op` — completion sourced in .aladd.zsh (distributed as cask, not formula)
 cask "karabiner-elements"        # keyboard remapper, config in .config/karabiner/
 
 # ---- intentionally NOT here -------------------------------------------------
 # These are documented in README under "Manual installs / known gaps":
-#   - font-monaspace-nerd-font  (user discretion)
 #   - dotnet-sdk                (work setup)
 #   - kubectl / kubectx / minikube (work setup)

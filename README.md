@@ -96,7 +96,6 @@ source ~/.aladd.zsh
 
 The Makefile deliberately does **not** install these — they're personal-preference or work-environment dependent.
 
-- **MonaspiceNe Nerd Font** — referenced by `.wezterm.lua` and `.config/ghostty/config`. Install via the [Nerd Fonts](https://www.nerdfonts.com/) downloads, or `brew install --cask font-monaspace-nerd-font`.
 - **dotnet SDK** — `.aladd.zsh` wires up `dotnet` zsh completion. Without `dotnet` on PATH, you'll see a "command not found" warning on shell startup.
 - **Kubernetes tooling** (`kubectl`, `kubectx`/`kubens`, `minikube`) — `.aladd.zsh` defines aliases (`k`, `kc`, `kn`, `mk`) and sources `kubectl completion zsh`. Install from work onboarding or `brew install kubectl kubectx minikube` to enable them.
 - **LazyVim plugins** — `nvim` self-bootstraps `lazy.nvim` on first launch. Just open `nvim`.
