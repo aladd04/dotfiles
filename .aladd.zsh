@@ -434,3 +434,8 @@ compdef _op op
 PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
 export PATH
 
+# brew ruby is keg-only — prepend its bin so `ruby` resolves to brew's 3.x (Mason needs >=2.7)
+# checks both Apple Silicon and Intel brew prefixes
+[ -d /opt/homebrew/opt/ruby/bin ] && export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+[ -d /usr/local/opt/ruby/bin ] && export PATH="/usr/local/opt/ruby/bin:$PATH"
+

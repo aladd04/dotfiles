@@ -21,3 +21,14 @@ _darcs
 ^/COPYING
 
 .DS_Store
+
+# plan artifacts (repo-only, not symlinked into $HOME)
+^/.plans
+
+# bootstrap / repo-only files (not symlinked into $HOME)
+^/Makefile
+^/Brewfile
+^/iterm2
+
+# .zshrc-example is copied into $HOME by `make zshrc`, not symlinked
+^/.zshrc-example
