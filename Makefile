@@ -66,14 +66,20 @@ zshrc: ## copy .zshrc-example to ~/.zshrc — only if ~/.zshrc doesn't already e
 
 post-install: tpm fzf-tab fzf-shell cship ## run all non-brew bootstrap steps
 
-tpm: ## clone tmux plugin manager and install declared plugins
+tpm: ## clone tpm + catppuccin/tmux, install TPM-declared plugins, source config in any running tmux
 	@TPM_DIR=$$HOME/.config/tmux/plugins/tpm; \
 	  if [ -d $$TPM_DIR/.git ]; then echo "tpm already cloned"; \
 	  else git clone https://github.com/tmux-plugins/tpm $$TPM_DIR; fi
+	@CATP_DIR=$$HOME/.config/tmux/plugins/catppuccin/tmux; \
+	  if [ -d $$CATP_DIR/.git ]; then echo "catppuccin/tmux already cloned"; \
+	  else mkdir -p $$HOME/.config/tmux/plugins/catppuccin && \
+	    git clone -b v2.3.0 https://github.com/catppuccin/tmux.git $$CATP_DIR; fi
 	@TPM_DIR=$$HOME/.config/tmux/plugins/tpm; \
 	  if tmux info >/dev/null 2>&1; then \
 	    echo "Reusing running tmux server for plugin install..."; \
 	    $$TPM_DIR/bin/install_plugins; \
+	    echo "Sourcing ~/.tmux.conf in running tmux server..."; \
+	    tmux source-file $$HOME/.tmux.conf 2>/dev/null || true; \
 	  else \
 	    echo "Starting transient tmux server for plugin install..."; \
 	    tmux new-session -d -s _tpm_bootstrap 2>/dev/null || true; \
