@@ -21,3 +21,6 @@ _darcs
 ^/COPYING
 
 .DS_Store
+
+# plan artifacts (repo-only, not symlinked into $HOME)
+^/.plans
