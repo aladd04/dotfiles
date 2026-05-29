@@ -21,6 +21,7 @@ alias vi='nvim'
 alias v='nvim'
 alias gitui='lazygit --use-config-file="$HOME/Library/Application Support/lazygit/config.yml,$HOME/.config/lazygit/catppuccin-mocha-blue.yml"'
 alias claudee='claude --dangerously-skip-permissions'
+alias codexx='codex --dangerously-bypass-approvals-and-sandbox'
 
 # check ports in us
 alias portcheck='lsof -i -n -P'
