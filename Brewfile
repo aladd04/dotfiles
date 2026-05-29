@@ -41,6 +41,7 @@ cask 'font-monaspace-nerd-font'  # Nerd Font variant — what wezterm/ghostty co
 
 # ---- mac apps ---------------------------------------------------------------
 cask '1password-cli'             # `op` — completion sourced in .aladd.zsh (distributed as cask, not formula)
+cask 'git-credential-manager'    # secure cross-platform git credential helper (distributed as cask, not formula)
 cask 'karabiner-elements'        # keyboard remapper, config in .config/karabiner/
 
 # ---- intentionally NOT here -------------------------------------------------
