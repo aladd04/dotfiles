@@ -104,7 +104,7 @@ source ~/.aladd.zsh
 
 ## Manual configuration
 
-Everything is installed by `make bootstrap` — there's no separate work/personal variant. The cloud / k8s / data tools (`az`, `kubectl`, `kubectx`, `helm`, `redis`, `sqlcmd`) are in the Brewfile and land on every machine; what's left is signing in and pointing them at the right place, which this repo can't do for you.
+Everything is installed by `make bootstrap` — there's no separate work/personal variant. The cloud / k8s / data tools (`aspire`, `az`, `kubectl`, `kubectx`, `helm`, `redis`, `sqlcmd`) are in the Brewfile and land on every machine; what's left is signing in and pointing them at the right place, which this repo can't do for you.
 
 - **Azure CLI** (`az`)
   ```
