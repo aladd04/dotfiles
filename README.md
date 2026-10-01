@@ -35,6 +35,8 @@ That runs, in order:
 3. `make zshrc` — copies `.zshrc-example` → `~/.zshrc` if no `~/.zshrc` exists (won't clobber an existing one)
 4. `make post-install` — clones tpm + fzf-tab, wires fzf shell hooks, installs cship
 
+Every step prints a `▶` header and a `✓` / `·` result line; brew streams its own download progress for anything it installs. cship is downloaded straight from its GitHub release (no `install.sh`), and is skipped once installed — `make cship FORCE=1` upgrades it to the latest release.
+
 Then open a new shell:
 ```
 exec zsh -l
@@ -64,7 +66,7 @@ If you want to undo just the symlinks: `make unlink`.
 
 ## Troubleshooting: "stow link failed" / `make bootstrap` partially worked
 
-If a previous bootstrap ran post-install steps before stow successfully created symlinks (e.g. because deps or link failed mid-run), some installers — notably cship — drop real files at the same paths the repo wants to symlink. Stow then refuses to overwrite them and aborts.
+If a previous bootstrap ran post-install steps before stow successfully created symlinks (e.g. because deps or link failed mid-run), some installers drop real files at the same paths the repo wants to symlink. Stow then refuses to overwrite them and aborts. (Older versions of this Makefile ran cship's upstream `install.sh`, which did exactly that with `~/.config/cship.toml`.)
 
 Quick fix:
 ```
@@ -79,7 +81,7 @@ If a bootstrap didn't go right and you want to retry from scratch:
 make uninstall            # prompts for confirmation
 make uninstall FORCE=1    # skip the prompt
 ```
-That removes the stow symlinks, `brew uninstall`s everything in `Brewfile` (including casks like wezterm/karabiner — their app binaries go with them), deletes the tpm + fzf-tab clones, removes the `cship` binary if present, and wipes tool-level runtime state (nvim plugins/Mason LSPs/cache/shada, tmux resurrect, zoxide db, bat cache, yazi state). Homebrew itself and macOS `~/Library/Application Support/*` entries are left alone — if you want a true factory reset of karabiner/wezterm/lazygit app state, remove those manually.
+That removes the stow symlinks, `brew uninstall`s everything in `Brewfile` (including casks like wezterm/karabiner — their app binaries go with them), deletes the tpm + fzf-tab clones, removes the `cship` binary and its `statusLine` entry in `~/.claude/settings.json`, and wipes tool-level runtime state (nvim plugins/Mason LSPs/cache/shada, tmux resurrect, zoxide db, bat cache, yazi state). Homebrew itself and macOS `~/Library/Application Support/*` entries are left alone — if you want a true factory reset of karabiner/wezterm/lazygit app state, remove those manually.
 
 Selective wipes if you only want part of it:
 - `make uninstall-deps` — only the Brewfile packages
