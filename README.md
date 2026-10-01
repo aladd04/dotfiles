@@ -108,6 +108,13 @@ The Makefile deliberately does **not** install these — they're personal-prefer
 
 - **Kubernetes tooling** (`kubectl`, `kubectx`/`kubens`) — work setup. `.aladd.zsh` defines aliases (`k`, `kc`, `kn`) plus fzf-powered pod/log helpers, and sources `kubectl completion zsh` when `kubectl` is present. Install from work onboarding or `brew install kubectl kubectx` to enable them.
 - **Azure CLI** (`az`) — work setup. `brew install azure-cli`, then `az login`. Nothing in this repo depends on it; it's listed here so a work machine gets it alongside the k8s tooling.
+- **Azure DevOps CLI** (`az devops`, `az repos`, `az pipelines`, `az boards`, `az artifacts`) — work setup; an extension on top of the Azure CLI above ([docs](https://learn.microsoft.com/en-us/azure/devops/cli/)). Cloud Azure DevOps Services only, not on-prem Server.
+  ```
+  az extension add --name azure-devops        # or: az extension update --name azure-devops
+  az login                                    # Entra sign-in; preferred over a PAT
+  az devops configure --defaults organization=https://dev.azure.com/<org> project=<project>
+  az devops --help                            # sanity check; `--open` on most show commands opens the item in a browser
+  ```
 - **LazyVim plugins** — `nvim` self-bootstraps `lazy.nvim` on first launch. Just open `nvim`.
 - **iTerm2** — `iterm2/` in this repo holds a legacy color-scheme export. Current default terminal is wezterm.
 
