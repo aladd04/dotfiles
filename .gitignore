@@ -3,3 +3,6 @@
 # Ignore tmux plugin manager (tpm) plugins
 /.config/tmux/plugins/
 
+
+# Docker cagent (docker agent plugin) first-run marker + telemetry UUID
+/.config/cagent/
