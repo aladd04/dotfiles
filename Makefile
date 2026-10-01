@@ -246,7 +246,7 @@ doctor: ## sanity check — list which expected tools are on PATH
 	  else printf '  \033[31m✗\033[0m %s\n' $$cmd; fi; \
 	done
 	@printf '\nOptional / manual installs (informational only):\n'
-	@for cmd in kubectl kubectx kubens minikube; do \
+	@for cmd in kubectl kubectx kubens az; do \
 	  if command -v $$cmd >/dev/null 2>&1; then printf '  \033[32m✓\033[0m %s\n' $$cmd; \
 	  else printf '  \033[2m·\033[0m %s (manual)\n' $$cmd; fi; \
 	done

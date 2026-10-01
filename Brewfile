@@ -52,5 +52,6 @@ cask 'codex'
 
 # ---- intentionally NOT here -------------------------------------------------
 # These are documented in README under "Manual installs / known gaps":
-#   - kubectl / kubectx / minikube (work setup)
+#   - kubectl / kubectx       (work setup)
+#   - azure-cli               (work setup)
 # node and dotnet are managed by mise, not brew — see .config/mise/config.toml

@@ -106,7 +106,8 @@ source ~/.aladd.zsh
 
 The Makefile deliberately does **not** install these — they're personal-preference or work-environment dependent.
 
-- **Kubernetes tooling** (`kubectl`, `kubectx`/`kubens`, `minikube`) — `.aladd.zsh` defines aliases (`k`, `kc`, `kn`, `mk`) and sources `kubectl completion zsh`. Install from work onboarding or `brew install kubectl kubectx minikube` to enable them.
+- **Kubernetes tooling** (`kubectl`, `kubectx`/`kubens`) — work setup. `.aladd.zsh` defines aliases (`k`, `kc`, `kn`) plus fzf-powered pod/log helpers, and sources `kubectl completion zsh` when `kubectl` is present. Install from work onboarding or `brew install kubectl kubectx` to enable them.
+- **Azure CLI** (`az`) — work setup. `brew install azure-cli`, then `az login`. Nothing in this repo depends on it; it's listed here so a work machine gets it alongside the k8s tooling.
 - **LazyVim plugins** — `nvim` self-bootstraps `lazy.nvim` on first launch. Just open `nvim`.
 - **iTerm2** — `iterm2/` in this repo holds a legacy color-scheme export. Current default terminal is wezterm.
 
