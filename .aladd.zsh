@@ -19,7 +19,7 @@ alias cdh='z ~'
 alias vim='nvim'
 alias vi='nvim'
 alias v='nvim'
-alias gitui='lazygit --use-config-file="$HOME/Library/Application Support/lazygit/config.yml,$HOME/.config/lazygit/catppuccin-mocha-blue.yml"'
+alias gitui='lazygit --use-config-file="$HOME/.config/lazygit/config.yml,$HOME/.config/lazygit/catppuccin-mocha-blue.yml"'
 alias claudee='claude --dangerously-skip-permissions'
 alias codexx='codex --dangerously-bypass-approvals-and-sandbox'
 
@@ -440,3 +440,6 @@ export PATH
 [ -d /opt/homebrew/opt/ruby/bin ] && export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 [ -d /usr/local/opt/ruby/bin ] && export PATH="/usr/local/opt/ruby/bin:$PATH"
 
+
+# user-local binaries (cship installer and similar tools drop binaries here)
+[ -d "$HOME/.local/bin" ] && export PATH="$HOME/.local/bin:$PATH"

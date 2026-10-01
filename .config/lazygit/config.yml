@@ -1,0 +1,9 @@
+# lazygit user settings. Theme lives in catppuccin-mocha-blue.yml; both are
+# loaded together by the `gitui` alias in .aladd.zsh. Keep machine-agnostic.
+# Reference: https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md
+gui:
+  nerdFontsVersion: "3"
+git:
+  diffRenderers:
+    - colorArg: always
+      type: rawGit
