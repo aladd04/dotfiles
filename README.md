@@ -106,6 +106,14 @@ source ~/.aladd.zsh
 
 Everything is installed by `make bootstrap` — there's no separate work/personal variant. The cloud / k8s / data tools (`az`, `kubectl`, `kubectx`, `kubelogin`, `helm`, `redis`, `sqlcmd`) are in the Brewfile, the `aspire` CLI comes from mise, and all of it lands on every machine; what's left is signing in and pointing them at the right place, which this repo can't do for you.
 
+- **Git identity + credentials** — nothing in this repo stows a `.gitconfig`, so set these once per machine:
+  ```
+  git config --global user.name  "Andy Ladd"
+  git config --global user.email "aladd04@gmail.com"
+  git-credential-manager configure            # wires the GCM cask from the Brewfile in as credential.helper
+  git config --global credential.https://dev.azure.com.useHttpPath true   # GCM needs this for Azure DevOps repos
+  ```
+  To use a different email for work repos without changing the global one, add a conditional include — e.g. `git config --global includeIf."gitdir:~/work/".path ~/.gitconfig-work`, with `~/.gitconfig-work` holding just a `[user] email = ...` block.
 - **Azure CLI** (`az`)
   ```
   az login                                    # Entra sign-in; preferred over a PAT
