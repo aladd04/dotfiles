@@ -104,7 +104,7 @@ source ~/.aladd.zsh
 
 ## Manual configuration
 
-Everything is installed by `make bootstrap` — there's no separate work/personal variant. The cloud / k8s / data tools (`az`, `kubectl`, `kubectx`, `helm`, `redis`, `sqlcmd`) are in the Brewfile, the `aspire` CLI comes from mise, and all of it lands on every machine; what's left is signing in and pointing them at the right place, which this repo can't do for you.
+Everything is installed by `make bootstrap` — there's no separate work/personal variant. The cloud / k8s / data tools (`az`, `kubectl`, `kubectx`, `kubelogin`, `helm`, `redis`, `sqlcmd`) are in the Brewfile, the `aspire` CLI comes from mise, and all of it lands on every machine; what's left is signing in and pointing them at the right place, which this repo can't do for you.
 
 - **Azure CLI** (`az`)
   ```
@@ -116,7 +116,7 @@ Everything is installed by `make bootstrap` — there's no separate work/persona
   az devops configure --defaults organization=https://dev.azure.com/<org> project=<project>
   az devops --help                            # sanity check; `--open` on most show commands opens the item in a browser
   ```
-- **Kubernetes** (`kubectl`, `kubectx`/`kubens`, `helm`) — get a kubeconfig from work onboarding (e.g. `az aks get-credentials ...`). `.aladd.zsh` defines aliases (`k`, `kc`, `kn`) plus fzf-powered pod/log helpers, and sources `kubectl completion zsh` when `kubectl` is present.
+- **Kubernetes** (`kubectl`, `kubectx`/`kubens`, `kubelogin`, `helm`) — get a kubeconfig from work onboarding, e.g. `az aks get-credentials -g <rg> -n <cluster>` followed by `kubelogin convert-kubeconfig -l azurecli` so kubectl reuses your `az login` session. `.aladd.zsh` defines aliases (`k`, `kc`, `kn`) plus fzf-powered pod/log helpers, and sources `kubectl completion zsh` when `kubectl` is present.
 - **Redis** — only `redis-cli` is needed day-to-day. If you want a local server: `brew services start redis`.
 - **sqlcmd** — nothing to configure; connect with `sqlcmd -S <server> -d <db> -G` (Entra auth) or `-U <user>`.
 - **LazyVim plugins** — `nvim` self-bootstraps `lazy.nvim` on first launch. Just open `nvim`.

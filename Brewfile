@@ -7,6 +7,9 @@
 #
 # Sections are alphabetical for scannability.
 
+# ---- taps -------------------------------------------------------------------
+tap 'azure/kubelogin'            # Azure's kubelogin (homebrew-core's `kubelogin` is int128's unrelated OIDC plugin)
+
 # ---- core CLI ---------------------------------------------------------------
 brew 'bat'                       # cat replacement, used as `cat` alias
 brew 'btop'                      # system monitor
@@ -59,6 +62,7 @@ brew 'azure-cli'                 # `az` — Azure CLI; `az devops` extension add
 brew 'helm'                      # Kubernetes package manager
 brew 'kubernetes-cli'            # `kubectl` — aliases (k) + fzf helpers in .aladd.zsh, completion sourced when present
 brew 'kubectx'                   # `kubectx` / `kubens` — context + namespace switchers, aliased kc / kn in .aladd.zsh
+brew 'azure/kubelogin/kubelogin' # `kubelogin` — kubectl exec credential plugin for AKS / Entra auth (used by `az aks get-credentials`)
 brew 'redis'                     # `redis-cli` (+ redis-server; start locally with `brew services start redis` if needed)
 brew 'sqlcmd'                    # `sqlcmd` — Microsoft SQL Server CLI (go-sqlcmd)
 

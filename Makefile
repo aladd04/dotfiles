@@ -61,13 +61,23 @@ bootstrap: ## full setup: deps + link + zshrc + post-install (requires brew + gi
 deps: ## install everything listed in Brewfile (idempotent)
 	@command -v brew >/dev/null 2>&1 || { echo "brew not found — see README \"Prerequisites\" before running this"; exit 1; }
 	@$(call step,brew deps (Brewfile))
+	@# Homebrew ≥ 7 refuses to load formulae/casks from third-party taps until
+	@# they are trusted (`brew trust`). Trust every `tap` line in the Brewfile so
+	@# `brew bundle` can install from them; no-op on older Homebrew / already trusted.
+	@if brew trust --help >/dev/null 2>&1; then \
+	  for t in $$(brew bundle list --tap --file=$(BREWFILE) 2>/dev/null); do \
+	    MSG=$$(brew trust --tap $$t 2>&1) || { echo "$$MSG"; exit 1; }; \
+	    case "$$MSG" in Already*) ;; *) $(call note,$$MSG) ;; esac; \
+	  done; \
+	fi
 	@set -o pipefail; \
 	  if OUT=$$(brew bundle check --file=$(BREWFILE) --verbose 2>&1); then \
 	    $(call ok,all Brewfile deps already installed); \
 	  else \
 	    echo "$$OUT" | sed -n 's/^→ \(.*\) needs to be installed or updated\.$$/  · \1/p'; \
 	    HOMEBREW_NO_ENV_HINTS=1 brew bundle install --file=$(BREWFILE) --quiet --verbose 2>&1 \
-	      | { grep --line-buffered -v -E '^Skipping install of .* It is already installed\.$$' || true; }; \
+	      | { grep --line-buffered -v -E '^Skipping install of .* It is already installed\.$$' || true; } \
+	      || { printf '  \033[31m✗\033[0m brew bundle install failed\n'; exit 1; }; \
 	    $(call ok,Brewfile deps installed); \
 	  fi
 
@@ -242,7 +252,7 @@ doctor: ## sanity check — list which expected tools are on PATH
 	@printf '\nChecking PATH for expected tools (✓ found, ✗ missing):\n'
 	@export PATH="$$HOME/.local/share/mise/shims:$$PATH"; \
 	  for cmd in brew git stow bat eza fd rg fzf zoxide jq tmux nvim btop starship yazi lazygit fastfetch op mise node npm dotnet go python3 ruby cship \
-	             az kubectl kubectx kubens helm redis-cli sqlcmd aspire; do \
+	             az kubectl kubectx kubens kubelogin helm redis-cli sqlcmd aspire; do \
 	  if command -v $$cmd >/dev/null 2>&1; then printf '  \033[32m✓\033[0m %s\n' $$cmd; \
 	  else printf '  \033[31m✗\033[0m %s\n' $$cmd; fi; \
 	done
