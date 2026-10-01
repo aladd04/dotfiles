@@ -1,0 +1,15 @@
+# mise — runtime version manager (https://mise.jdx.dev)
+# Global tool versions. `make mise-tools` (part of `make bootstrap`) runs
+# `mise install` against this file. Per-project overrides go in a project's
+# own mise.toml / .node-version / .nvmrc.
+#
+# Pin or bump here, then `mise install` — "lts" / "10" track the latest
+# matching release at install time; see `mise ls-remote <tool>`.
+
+[tools]
+node = "lts"     # runtime + npm for Mason-installed JS/TS tools (bash-language-server, markdownlint-cli2, markdown-toc)
+dotnet = "10"    # .NET SDK; `.aladd.zsh` wires up `dotnet` zsh completion
+
+[settings]
+# honor .nvmrc / .node-version in project dirs (off by default in current mise)
+idiomatic_version_file_enable_tools = ["node"]

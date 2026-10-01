@@ -19,7 +19,7 @@ SHELL := /usr/bin/env bash
 DOTFILES_DIR := $(shell pwd)
 BREWFILE := $(DOTFILES_DIR)/Brewfile
 
-.PHONY: help bootstrap deps link unlink relink zshrc post-install tpm fzf-tab fzf-shell cship doctor \
+.PHONY: help bootstrap deps link unlink relink zshrc post-install tpm fzf-tab fzf-shell mise-tools cship doctor \
 	    fix-stow uninstall uninstall-deps uninstall-clones uninstall-cship uninstall-state
 
 # ── output helpers ────────────────────────────────────────────────────────────
@@ -101,7 +101,7 @@ zshrc: ## copy .zshrc-example to ~/.zshrc — only if ~/.zshrc doesn't already e
 	  $(call ok,copied .zshrc-example → ~/.zshrc); \
 	fi
 
-post-install: tpm fzf-tab fzf-shell cship ## run all non-brew bootstrap steps
+post-install: tpm fzf-tab fzf-shell mise-tools cship ## run all non-brew bootstrap steps
 
 tpm: ## clone tpm + catppuccin/tmux, install TPM-declared plugins, source config in any running tmux
 	@$(call step,tmux plugins (tpm))
@@ -135,6 +135,13 @@ fzf-shell: ## install fzf shell key-bindings + completion
 	@INSTALLER="$$(brew --prefix)/opt/fzf/install"; \
 	  if [ -x "$$INSTALLER" ]; then $(call quiet,fzf key-bindings + completion (~/.fzf.zsh),"$$INSTALLER" --all --no-update-rc); \
 	  else echo "fzf installer not found — is fzf installed?" && exit 1; fi
+
+mise-tools: ## install runtimes declared in .config/mise/config.toml (node, dotnet) — needs `make link` first
+	@command -v mise >/dev/null 2>&1 || { echo "mise not found — run 'make deps' first"; exit 1; }
+	@$(call step,mise runtimes (node + dotnet))
+	@[ -e $$HOME/.config/mise/config.toml ] || { echo "~/.config/mise/config.toml missing — run 'make link' first"; exit 1; }
+	@set -o pipefail; mise install --yes 2>&1 | sed 's/^/  /'
+	@mise ls --global 2>/dev/null | sed 's/^/  /'
 
 # Installs the release binary directly instead of piping cship.dev/install.sh:
 # the upstream installer uninstalls + re-downloads on every run, rewrites
@@ -176,7 +183,7 @@ uninstall: ## clean-slate wipe: unlink + brew + clones + cship + tool state (FOR
 	  printf '  - `brew uninstall` every formula/cask listed in Brewfile (including apps like wezterm and karabiner-elements)\n'; \
 	  printf '  - delete ~/.config/tmux/plugins and ~/git-tools/fzf-tab\n'; \
 	  printf '  - remove the cship binary (~/.local/bin or PATH) and its statusLine entry in ~/.claude/settings.json\n'; \
-	  printf '  - wipe tool runtime state: nvim plugins/cache/shada, tmux resurrect, zoxide db, bat cache, yazi state\n'; \
+	  printf '  - wipe tool runtime state: nvim plugins/cache/shada, tmux resurrect, zoxide db, bat cache, yazi state, mise runtimes\n'; \
 	  printf 'Homebrew itself and macOS ~/Library app state are NOT removed.\n\n'; \
 	  read -rp "Proceed? [y/N] " ans; \
 	  case "$$ans" in y|Y|yes|YES) ;; *) echo "aborted."; exit 1 ;; esac; \
@@ -216,7 +223,7 @@ uninstall-cship: ## remove the cship binary + its statusLine entry in ~/.claude/
 	    echo "Removed statusLine entry from $$SETTINGS"; \
 	  fi
 
-uninstall-state: ## wipe tool runtime state (nvim plugins+cache+shada, tmux resurrect, zoxide db, bat cache, yazi state)
+uninstall-state: ## wipe tool runtime state (nvim plugins+cache+shada, tmux resurrect, zoxide db, bat cache, yazi state, mise runtimes)
 	@echo "Removing nvim runtime state (lazy plugins, mason LSPs, cache, shada)..."
 	@rm -rf $$HOME/.local/share/nvim $$HOME/.local/state/nvim $$HOME/.cache/nvim
 	@echo "Removing tmux runtime state (resurrect snapshots)..."
@@ -227,16 +234,19 @@ uninstall-state: ## wipe tool runtime state (nvim plugins+cache+shada, tmux resu
 	@rm -rf $$HOME/.cache/bat
 	@echo "Removing yazi state..."
 	@rm -rf $$HOME/.local/state/yazi
+	@echo "Removing mise-managed runtimes (node, dotnet) and cache..."
+	@rm -rf $$HOME/.local/share/mise $$HOME/.local/state/mise $$HOME/.cache/mise
 	@echo "  (~/Library/Application Support entries for lazygit/karabiner/wezterm intentionally left alone)"
 
 doctor: ## sanity check — list which expected tools are on PATH
 	@printf '\nChecking PATH for expected tools (✓ found, ✗ missing):\n'
-	@for cmd in brew git stow bat eza fd rg fzf zoxide jq tmux nvim btop starship yazi lazygit fastfetch op node npm go python3 ruby cship; do \
+	@export PATH="$$HOME/.local/share/mise/shims:$$PATH"; \
+	  for cmd in brew git stow bat eza fd rg fzf zoxide jq tmux nvim btop starship yazi lazygit fastfetch op mise node npm dotnet go python3 ruby cship; do \
 	  if command -v $$cmd >/dev/null 2>&1; then printf '  \033[32m✓\033[0m %s\n' $$cmd; \
 	  else printf '  \033[31m✗\033[0m %s\n' $$cmd; fi; \
 	done
 	@printf '\nOptional / manual installs (informational only):\n'
-	@for cmd in kubectl kubectx kubens minikube dotnet; do \
+	@for cmd in kubectl kubectx kubens minikube; do \
 	  if command -v $$cmd >/dev/null 2>&1; then printf '  \033[32m✓\033[0m %s\n' $$cmd; \
 	  else printf '  \033[2m·\033[0m %s (manual)\n' $$cmd; fi; \
 	done

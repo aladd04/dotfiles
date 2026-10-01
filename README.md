@@ -33,7 +33,7 @@ That runs, in order:
 1. `make deps` — `brew bundle install --file=Brewfile`
 2. `make link` — `stow` this repo into `$HOME`
 3. `make zshrc` — copies `.zshrc-example` → `~/.zshrc` if no `~/.zshrc` exists (won't clobber an existing one)
-4. `make post-install` — clones tpm + fzf-tab, wires fzf shell hooks, installs cship
+4. `make post-install` — clones tpm + fzf-tab, wires fzf shell hooks, installs mise-managed runtimes (node, dotnet), installs cship
 
 Every step prints a `▶` header and a `✓` / `·` result line; brew streams its own download progress for anything it installs. cship is downloaded straight from its GitHub release (no `install.sh`), and is skipped once installed — `make cship FORCE=1` upgrades it to the latest release.
 
@@ -87,18 +87,25 @@ Selective wipes if you only want part of it:
 - `make uninstall-deps` — only the Brewfile packages
 - `make uninstall-clones` — only the tpm + fzf-tab dirs
 - `make uninstall-cship` — only cship
-- `make uninstall-state` — only tool runtime state (nvim cache etc.)
+- `make uninstall-state` — only tool runtime state (nvim cache, mise runtimes, etc.)
 
 After pulling, also source the custom zsh config in your current shell:
 ```
 source ~/.aladd.zsh
 ```
 
+## Runtimes (mise)
+
+`node` and `dotnet` are managed by [mise](https://mise.jdx.dev), not brew. Versions live in `.config/mise/config.toml` (stowed to `~/.config/mise/config.toml`); `make mise-tools` runs `mise install` against it. `.aladd.zsh` activates mise and puts its shims on PATH so non-interactive processes (nvim/Mason, Claude Code) find the runtimes too.
+
+- Bump a version: edit `config.toml`, then `mise install`
+- Per-project version: `mise use node@22` in that directory (writes `mise.toml`); `.nvmrc` / `.node-version` are honored too
+- See what's active: `mise ls`
+
 ## Manual installs / known gaps
 
 The Makefile deliberately does **not** install these — they're personal-preference or work-environment dependent.
 
-- **dotnet SDK** — `.aladd.zsh` wires up `dotnet` zsh completion. Without `dotnet` on PATH, you'll see a "command not found" warning on shell startup.
 - **Kubernetes tooling** (`kubectl`, `kubectx`/`kubens`, `minikube`) — `.aladd.zsh` defines aliases (`k`, `kc`, `kn`, `mk`) and sources `kubectl completion zsh`. Install from work onboarding or `brew install kubectl kubectx minikube` to enable them.
 - **LazyVim plugins** — `nvim` self-bootstraps `lazy.nvim` on first launch. Just open `nvim`.
 - **iTerm2** — `iterm2/` in this repo holds a legacy color-scheme export. Current default terminal is wezterm.

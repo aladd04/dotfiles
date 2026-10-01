@@ -19,8 +19,7 @@ brew 'herdr'                     # AI native terminal multiplexer
 brew 'jq'                        # JSON tool, used by k8s helper functions
 brew 'lazygit'                   # git TUI
 brew 'neovim'                    # editor; LazyVim bootstraps itself on first launch
-brew 'node'                      # runtime + npm for Mason-installed JS/TS tools (bash-language-server, markdownlint-cli2, markdown-toc)
-brew 'nvm'                       # abuility to switch node versions easily
+brew 'mise'                      # runtime version manager — installs node + dotnet (see .config/mise/config.toml)
 brew 'python'                    # python 3.10+ for Mason-installed Python tools (sqlfluff); macOS-shipped 3.9 is too old
 brew 'ripgrep'                   # grep replacement, used as `grep` alias
 brew 'ruby'                      # ruby 3.x for Mason-installed Ruby tools (erb-lint, erb-formatter); macOS-shipped 2.6 is too old. Keg-only — see PATH shim in .aladd.zsh
@@ -53,5 +52,5 @@ cask 'codex'
 
 # ---- intentionally NOT here -------------------------------------------------
 # These are documented in README under "Manual installs / known gaps":
-#   - dotnet-sdk                (work setup)
 #   - kubectl / kubectx / minikube (work setup)
+# node and dotnet are managed by mise, not brew — see .config/mise/config.toml

@@ -443,3 +443,12 @@ export PATH
 
 # user-local binaries (cship installer and similar tools drop binaries here)
 [ -d "$HOME/.local/bin" ] && export PATH="$HOME/.local/bin:$PATH"
+
+# mise — manages node + dotnet (versions in .config/mise/config.toml).
+# shims first so non-interactive children (nvim/Mason, Claude Code, scripts)
+# still resolve node/dotnet; `activate` then gives interactive shells the
+# real per-directory PATH.
+if command -v mise >/dev/null 2>&1; then
+  export PATH="$HOME/.local/share/mise/shims:$PATH"
+  eval "$(mise activate zsh)"
+fi
