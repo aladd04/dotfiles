@@ -7,9 +7,6 @@
 #
 # Sections are alphabetical for scannability.
 
-# ---- taps -------------------------------------------------------------------
-tap 'microsoft/aspire'           # Aspire CLI cask (https://aspire.dev/get-started/install-cli/)
-
 # ---- core CLI ---------------------------------------------------------------
 brew 'bat'                       # cat replacement, used as `cat` alias
 brew 'btop'                      # system monitor
@@ -58,7 +55,6 @@ cask 'codex'
 # easier to maintain than work/personal variants, and unused tools cost nothing.
 # Configuring these (az login, az devops defaults, kube contexts) is still a
 # manual step — see README "Manual configuration".
-cask 'microsoft/aspire/aspire'   # `aspire` — .NET Aspire CLI (cask from Microsoft's tap, not homebrew-core)
 brew 'azure-cli'                 # `az` — Azure CLI; `az devops` extension added manually (see README)
 brew 'helm'                      # Kubernetes package manager
 brew 'kubernetes-cli'            # `kubectl` — aliases (k) + fzf helpers in .aladd.zsh, completion sourced when present
@@ -66,4 +62,4 @@ brew 'kubectx'                   # `kubectx` / `kubens` — context + namespace 
 brew 'redis'                     # `redis-cli` (+ redis-server; start locally with `brew services start redis` if needed)
 brew 'sqlcmd'                    # `sqlcmd` — Microsoft SQL Server CLI (go-sqlcmd)
 
-# node and dotnet are managed by mise, not brew — see .config/mise/config.toml
+# node, dotnet and the aspire CLI are managed by mise, not brew — see .config/mise/config.toml

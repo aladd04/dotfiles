@@ -136,9 +136,9 @@ fzf-shell: ## install fzf shell key-bindings + completion
 	  if [ -x "$$INSTALLER" ]; then $(call quiet,fzf key-bindings + completion (~/.fzf.zsh),"$$INSTALLER" --all --no-update-rc); \
 	  else echo "fzf installer not found — is fzf installed?" && exit 1; fi
 
-mise-tools: ## install runtimes declared in .config/mise/config.toml (node, dotnet) — needs `make link` first
+mise-tools: ## install tools declared in .config/mise/config.toml (node, dotnet, aspire) — needs `make link` first
 	@command -v mise >/dev/null 2>&1 || { echo "mise not found — run 'make deps' first"; exit 1; }
-	@$(call step,mise runtimes (node + dotnet))
+	@$(call step,mise tools (node + dotnet + aspire))
 	@[ -e $$HOME/.config/mise/config.toml ] || { echo "~/.config/mise/config.toml missing — run 'make link' first"; exit 1; }
 	@set -o pipefail; mise install --yes 2>&1 | sed 's/^/  /'
 	@mise ls --global 2>/dev/null | sed 's/^/  /'
@@ -234,7 +234,7 @@ uninstall-state: ## wipe tool runtime state (nvim plugins+cache+shada, tmux resu
 	@rm -rf $$HOME/.cache/bat
 	@echo "Removing yazi state..."
 	@rm -rf $$HOME/.local/state/yazi
-	@echo "Removing mise-managed runtimes (node, dotnet) and cache..."
+	@echo "Removing mise-managed tools (node, dotnet, aspire) and cache..."
 	@rm -rf $$HOME/.local/share/mise $$HOME/.local/state/mise $$HOME/.cache/mise
 	@echo "  (~/Library/Application Support entries for lazygit/karabiner/wezterm intentionally left alone)"
 

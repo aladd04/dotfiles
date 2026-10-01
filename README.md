@@ -33,7 +33,7 @@ That runs, in order:
 1. `make deps` — `brew bundle install --file=Brewfile`
 2. `make link` — `stow` this repo into `$HOME`
 3. `make zshrc` — copies `.zshrc-example` → `~/.zshrc` if no `~/.zshrc` exists (won't clobber an existing one)
-4. `make post-install` — clones tpm + fzf-tab, wires fzf shell hooks, installs mise-managed runtimes (node, dotnet), installs cship
+4. `make post-install` — clones tpm + fzf-tab, wires fzf shell hooks, installs mise-managed tools (node, dotnet, aspire), installs cship
 
 Every step prints a `▶` header and a `✓` / `·` result line; brew streams its own download progress for anything it installs. cship is downloaded straight from its GitHub release (no `install.sh`), and is skipped once installed — `make cship FORCE=1` upgrades it to the latest release.
 
@@ -96,15 +96,15 @@ source ~/.aladd.zsh
 
 ## Runtimes (mise)
 
-`node` and `dotnet` are managed by [mise](https://mise.jdx.dev), not brew. Versions live in `.config/mise/config.toml` (stowed to `~/.config/mise/config.toml`); `make mise-tools` runs `mise install` against it. `.aladd.zsh` activates mise and puts its shims on PATH so non-interactive processes (nvim/Mason, Claude Code) find the runtimes too.
+`node`, `dotnet` and the `aspire` CLI are managed by [mise](https://mise.jdx.dev), not brew. Versions live in `.config/mise/config.toml` (stowed to `~/.config/mise/config.toml`); `make mise-tools` runs `mise install` against it. `.aladd.zsh` activates mise and puts its shims on PATH so non-interactive processes (nvim/Mason, Claude Code) find the runtimes too.
 
 - Bump a version: edit `config.toml`, then `mise install`
-- Per-project version: `mise use node@22` in that directory (writes `mise.toml`); `.nvmrc` / `.node-version` are honored too
+- Per-project version: `mise use node@22` or `mise use aspire@13.5.4` in that directory (writes `mise.toml`); `.nvmrc` / `.node-version` are honored too
 - See what's active: `mise ls`
 
 ## Manual configuration
 
-Everything is installed by `make bootstrap` — there's no separate work/personal variant. The cloud / k8s / data tools (`aspire`, `az`, `kubectl`, `kubectx`, `helm`, `redis`, `sqlcmd`) are in the Brewfile and land on every machine; what's left is signing in and pointing them at the right place, which this repo can't do for you.
+Everything is installed by `make bootstrap` — there's no separate work/personal variant. The cloud / k8s / data tools (`az`, `kubectl`, `kubectx`, `helm`, `redis`, `sqlcmd`) are in the Brewfile, the `aspire` CLI comes from mise, and all of it lands on every machine; what's left is signing in and pointing them at the right place, which this repo can't do for you.
 
 - **Azure CLI** (`az`)
   ```
