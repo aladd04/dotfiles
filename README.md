@@ -102,19 +102,23 @@ source ~/.aladd.zsh
 - Per-project version: `mise use node@22` in that directory (writes `mise.toml`); `.nvmrc` / `.node-version` are honored too
 - See what's active: `mise ls`
 
-## Manual installs / known gaps
+## Manual configuration
 
-The Makefile deliberately does **not** install these — they're personal-preference or work-environment dependent.
+Everything is installed by `make bootstrap` — there's no separate work/personal variant. The cloud / k8s / data tools (`az`, `kubectl`, `kubectx`, `helm`, `redis`, `sqlcmd`) are in the Brewfile and land on every machine; what's left is signing in and pointing them at the right place, which this repo can't do for you.
 
-- **Kubernetes tooling** (`kubectl`, `kubectx`/`kubens`) — work setup. `.aladd.zsh` defines aliases (`k`, `kc`, `kn`) plus fzf-powered pod/log helpers, and sources `kubectl completion zsh` when `kubectl` is present. Install from work onboarding or `brew install kubectl kubectx` to enable them.
-- **Azure CLI** (`az`) — work setup. `brew install azure-cli`, then `az login`. Nothing in this repo depends on it; it's listed here so a work machine gets it alongside the k8s tooling.
-- **Azure DevOps CLI** (`az devops`, `az repos`, `az pipelines`, `az boards`, `az artifacts`) — work setup; an extension on top of the Azure CLI above ([docs](https://learn.microsoft.com/en-us/azure/devops/cli/)). Cloud Azure DevOps Services only, not on-prem Server.
+- **Azure CLI** (`az`)
+  ```
+  az login                                    # Entra sign-in; preferred over a PAT
+  ```
+- **Azure DevOps CLI** (`az devops`, `az repos`, `az pipelines`, `az boards`, `az artifacts`) — an extension on top of the Azure CLI ([docs](https://learn.microsoft.com/en-us/azure/devops/cli/)). Cloud Azure DevOps Services only, not on-prem Server.
   ```
   az extension add --name azure-devops        # or: az extension update --name azure-devops
-  az login                                    # Entra sign-in; preferred over a PAT
   az devops configure --defaults organization=https://dev.azure.com/<org> project=<project>
   az devops --help                            # sanity check; `--open` on most show commands opens the item in a browser
   ```
+- **Kubernetes** (`kubectl`, `kubectx`/`kubens`, `helm`) — get a kubeconfig from work onboarding (e.g. `az aks get-credentials ...`). `.aladd.zsh` defines aliases (`k`, `kc`, `kn`) plus fzf-powered pod/log helpers, and sources `kubectl completion zsh` when `kubectl` is present.
+- **Redis** — only `redis-cli` is needed day-to-day. If you want a local server: `brew services start redis`.
+- **sqlcmd** — nothing to configure; connect with `sqlcmd -S <server> -d <db> -G` (Entra auth) or `-U <user>`.
 - **LazyVim plugins** — `nvim` self-bootstraps `lazy.nvim` on first launch. Just open `nvim`.
 - **iTerm2** — `iterm2/` in this repo holds a legacy color-scheme export. Current default terminal is wezterm.
 
@@ -136,5 +140,4 @@ The Makefile deliberately does **not** install these — they're personal-prefer
 ## Roadmap
 
 - Linux support (apt/dnf/pacman branches keyed off `uname -s`)
-- Optional `make work` target for the manually-installed tools above
 - Guard `.aladd.zsh` completion sourcing on `command -v` so missing tools don't warn
