@@ -128,6 +128,9 @@ Everything is installed by `make bootstrap` — there's no separate work/persona
 - **Redis** — only `redis-cli` is needed day-to-day. If you want a local server: `brew services start redis`.
 - **sqlcmd** — nothing to configure; connect with `sqlcmd -S <server> -d <db> -G` (Entra auth) or `-U <user>`.
 - **LazyVim plugins** — `nvim` self-bootstraps `lazy.nvim` on first launch. Just open `nvim`.
+- **Keyboard remaps** — Karabiner-Elements is commented out of the Brewfile because the work MDM blocks its driver (system extension); `.config/karabiner/` is kept in case that changes. Its replacement:
+  - **Caps Lock → Control** is a macOS setting: System Settings → Keyboard → Keyboard Shortcuts… → Modifier Keys. It's stored **per keyboard** (built-in, Apple Bluetooth, Keychron each get their own), so pick each one in the "Select keyboard" dropdown and set it — macOS remembers it on reconnect after that.
+  - **Everything else** (Option+HJKL arrows, Shift+Control → Escape, Option+S disabled) is `.hammerspoon/init.lua`. On first launch grant Hammerspoon **Accessibility** in System Settings → Privacy & Security, then use its menu bar icon → Reload Config. It registers itself as a login item.
 - **iTerm2** — `iterm2/` in this repo holds a legacy color-scheme export. Current default terminal is wezterm.
 
 ## Layout
@@ -141,6 +144,7 @@ Everything is installed by `make bootstrap` — there's no separate work/persona
 ├── .config/               # XDG configs (stowed into ~/.config)
 ├── .aladd.zsh             # custom zsh sourced from ~/.zshrc
 ├── .tmux.conf             # loads .config/tmux/tmux.conf
+├── .hammerspoon/          # keyboard remaps (stowed into ~/.hammerspoon)
 ├── .vimrc, .wezterm.lua   # other root-level dotfiles
 └── iterm2/                # legacy color export — not stowed
 ```
