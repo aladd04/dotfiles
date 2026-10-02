@@ -70,13 +70,17 @@ deps: ## install everything listed in Brewfile (idempotent)
 	    case "$$MSG" in Already*) ;; *) $(call note,$$MSG) ;; esac; \
 	  done; \
 	fi
+	@# Keep brew attached to the terminal; the Git helper bypasses its stderr buffering.
 	@set -o pipefail; \
 	  if OUT=$$(brew bundle check --file=$(BREWFILE) --verbose 2>&1); then \
 	    $(call ok,all Brewfile deps already installed); \
 	  else \
 	    echo "$$OUT" | sed -n 's/^→ \(.*\) needs to be installed or updated\.$$/  · \1/p'; \
-	    HOMEBREW_NO_ENV_HINTS=1 brew bundle install --file=$(BREWFILE) --quiet --verbose 2>&1 \
-	      | { grep --line-buffered -v -E '^Skipping install of .* It is already installed\.$$' || true; } \
+	    export HOMEBREW_DOTFILES_REAL_GIT="$$(command -v "$${HOMEBREW_GIT_PATH:-git}")"; \
+	    export HOMEBREW_GIT_PATH="$(DOTFILES_DIR)/scripts/brew-git-progress"; \
+	    export HOMEBREW_DOTFILES_PROGRESS_TTY=0; \
+	    if [ -t 2 ]; then export HOMEBREW_DOTFILES_PROGRESS_TTY=1; fi; \
+	    HOMEBREW_NO_ENV_HINTS=1 brew bundle install --file="$(BREWFILE)" --verbose \
 	      || { printf '  \033[31m✗\033[0m brew bundle install failed\n'; exit 1; }; \
 	    $(call ok,Brewfile deps installed); \
 	  fi

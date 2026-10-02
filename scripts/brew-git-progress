@@ -1,0 +1,33 @@
+#!/bin/bash
+# Homebrew pipes Git stderr and buffers until a newline; Git progress uses CR.
+# Send transfer progress straight to the terminal during interactive make deps.
+# Other Git commands keep their original arguments, output and exit status.
+set -e
+
+# brew filters its environment to an allowlist including HOMEBREW_* variables.
+# Require the real binary: falling back to `git` can recurse into brew's shim.
+REAL_GIT="${HOMEBREW_DOTFILES_REAL_GIT:?real Git executable was not provided}"
+ARGS=("$@")
+INDEX=0
+while [ "$INDEX" -lt "${#ARGS[@]}" ]; do
+  case "${ARGS[INDEX]}" in
+    -c|-C|--git-dir|--work-tree|--namespace|--config-env)
+      INDEX=$((INDEX + 2)) ;;
+    --version|--help|-h)
+      break ;;
+    -*)
+      INDEX=$((INDEX + 1)) ;;
+    clone|fetch)
+      if [ "${HOMEBREW_DOTFILES_PROGRESS_TTY:-0}" = 1 ] && \
+          { exec 3>/dev/tty; } 2>/dev/null; then
+        # Keep global options before the command and insert before any `--`.
+        exec "$REAL_GIT" "${ARGS[@]:0:INDEX+1}" --progress \
+          "${ARGS[@]:INDEX+1}" 2>&3 3>&-
+      fi
+      break ;;
+    *)
+      break ;;
+  esac
+done
+
+exec "$REAL_GIT" "$@"

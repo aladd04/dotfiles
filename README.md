@@ -35,7 +35,7 @@ That runs, in order:
 3. `make zshrc` — copies `.zshrc-example` → `~/.zshrc` if no `~/.zshrc` exists (won't clobber an existing one)
 4. `make post-install` — clones tpm + fzf-tab, wires fzf shell hooks, installs mise-managed tools (node, dotnet, aspire), installs cship
 
-Every step prints a `▶` header and a `✓` / `·` result line; brew streams its own download progress for anything it installs. cship is downloaded straight from its GitHub release (no `install.sh`), and is skipped once installed — `make cship FORCE=1` upgrades it to the latest release.
+Every step prints a `▶` header and a `✓` / `·` result line. Brew output streams directly to the terminal, and tap clones show Git's live transfer progress (percent, bytes, and speed). Large tap histories can take several minutes to download. The progress helper applies only during `make deps` / `make bootstrap`; redirected runs keep ordinary Git output. cship is downloaded straight from its GitHub release (no `install.sh`), and is skipped once installed — `make cship FORCE=1` upgrades it to the latest release.
 
 Then open a new shell:
 ```
