@@ -1,5 +1,9 @@
 onboarding = false
 
+[keys]
+previous_workspace = "prefix+shift+k"
+next_workspace = "prefix+shift+j"
+
 [ui.toast]
 delivery = "system"
 
