@@ -18,7 +18,7 @@ brew 'fastfetch'                 # system info / fetch tool
 brew 'fd'                        # find replacement, used by fzf for path gen
 brew 'fzf'                       # fuzzy finder (shell hooks installed in post-install)
 brew 'go'                        # runtime for Mason-installed Go LSPs/formatters (goimports, gofumpt)
-brew 'herdr'                     # AI native terminal multiplexer
+brew 'herdr'                     # AI native terminal multiplexer, alternative to tmux — config in .config/herdr/
 brew 'jq'                        # JSON tool, used by k8s helper functions
 brew 'lazygit'                   # git TUI
 brew 'neovim'                    # editor; LazyVim bootstraps itself on first launch

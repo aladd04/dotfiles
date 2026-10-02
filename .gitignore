@@ -6,3 +6,7 @@
 
 # Docker cagent (docker agent plugin) first-run marker + telemetry UUID
 /.config/cagent/
+
+# herdr writes its sockets, logs and session state next to its config — track only the config
+/.config/herdr/*
+!/.config/herdr/config.toml
