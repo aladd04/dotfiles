@@ -214,6 +214,23 @@
                         "product_id": 2608,
                         "vendor_id": 13364
                     }
+                },
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 11008,
+                        "vendor_id": 6940
+                    },
+                    "ignore_vendor_events": true,
+                    "manipulate_caps_lock_led": false
+                },
+                {
+                    "identifiers": {
+                        "is_pointing_device": true,
+                        "product_id": 11008,
+                        "vendor_id": 6940
+                    },
+                    "ignore_vendor_events": true
                 }
             ],
             "name": "Default profile",
