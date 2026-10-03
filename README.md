@@ -72,7 +72,7 @@ Quick fix:
 ```
 make fix-stow
 ```
-That removes the known installer droppings (`~/.config/cship.toml`, `~/.config/cship/sample-context.json`) and re-runs `make link`. Then `make bootstrap` again to finish anything still pending.
+That removes the known installer droppings (`~/.config/cship.toml`, `~/.config/cship/sample-context.json`), parks a real `~/.config/karabiner/karabiner.json` as `karabiner.json.pre-stow` (Karabiner rewrites its config in place, so diff it against the repo copy before discarding), and re-runs `make link`. Then `make bootstrap` again to finish anything still pending.
 
 ## Clean-slate uninstall (try again)
 

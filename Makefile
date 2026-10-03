@@ -98,12 +98,18 @@ unlink: ## remove the symlinks stow created
 
 relink: unlink link ## unlink then re-stow (handy after rearranging files)
 
-fix-stow: ## remove known installer droppings in $HOME that block stow, then re-link
+fix-stow: ## remove known installer droppings in $HOME that block stow (karabiner.json is backed up, not deleted), then re-link
 	@for f in $$HOME/.config/cship.toml $$HOME/.config/cship/sample-context.json; do \
 	  if [ -e $$f ] && [ ! -L $$f ]; then \
 	    echo "Removing real file blocking stow: $$f"; rm -f $$f; \
 	  fi; \
 	done
+	@# Karabiner rewrites its config in place (device profiles etc.), so a real
+	@# file here may hold local edits worth merging — park it instead of deleting.
+	@f=$$HOME/.config/karabiner/karabiner.json; \
+	  if [ -e $$f ] && [ ! -L $$f ]; then \
+	    echo "Parking real file blocking stow: $$f -> $$f.pre-stow (diff it against the repo copy)"; mv $$f $$f.pre-stow; \
+	  fi
 	@$(MAKE) link
 
 zshrc: ## copy .zshrc-example to ~/.zshrc — only if ~/.zshrc doesn't already exist

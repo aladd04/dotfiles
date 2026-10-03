@@ -33,3 +33,6 @@ _darcs
 
 # .zshrc-example is copied into $HOME by `make zshrc`, not symlinked
 ^/.zshrc-example
+
+# ruby-lsp scratch dir (gitignored, editor-only — not symlinked into $HOME)
+^/.ruby-lsp
