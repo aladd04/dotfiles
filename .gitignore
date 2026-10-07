@@ -10,3 +10,6 @@
 # herdr writes its sockets, logs and session state next to its config — track only the config
 /.config/herdr/*
 !/.config/herdr/config.toml
+
+# ai-memory per-machine config and restic passwords (restic repo paths, project list, *.pw); never commit
+/.config/ai-memory/
