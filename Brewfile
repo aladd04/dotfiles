@@ -17,6 +17,7 @@ brew 'eza'                       # ls replacement, used as `ls` alias
 brew 'fastfetch'                 # system info / fetch tool
 brew 'fd'                        # find replacement, used by fzf for path gen
 brew 'fzf'                       # fuzzy finder (shell hooks installed in post-install)
+brew 'gh'                        # GitHub CLI
 brew 'go'                        # runtime for Mason-installed Go LSPs/formatters (goimports, gofumpt)
 brew 'herdr'                     # AI native terminal multiplexer, alternative to tmux — config in .config/herdr/
 brew 'jq'                        # JSON tool, used by k8s helper functions
@@ -24,6 +25,7 @@ brew 'lazygit'                   # git TUI
 brew 'neovim'                    # editor; LazyVim bootstraps itself on first launch
 brew 'mise'                      # runtime version manager — installs node + dotnet (see .config/mise/config.toml)
 brew 'python'                    # python 3.10+ for Mason-installed Python tools (sqlfluff); macOS-shipped 3.9 is too old
+brew 'restic'                    # backup tool — used by the ai-memory backup scripts (~/github/aladd04/ai-memory)
 brew 'ripgrep'                   # grep replacement, used as `grep` alias
 brew 'ruby'                      # ruby 3.x for Mason-installed Ruby tools (erb-lint, erb-formatter); macOS-shipped 2.6 is too old. Keg-only — see PATH shim in .aladd.zsh
 brew 'sevenzip'                  # 7zip for unpacking
