@@ -25,7 +25,7 @@ brew 'lazygit'                   # git TUI
 brew 'neovim'                    # editor; LazyVim bootstraps itself on first launch
 brew 'mise'                      # runtime version manager — installs node + dotnet (see .config/mise/config.toml)
 brew 'python'                    # python 3.10+ for Mason-installed Python tools (sqlfluff); macOS-shipped 3.9 is too old
-brew 'restic'                    # backup tool — used by the ai-memory backup scripts (~/github/aladd04/ai-memory)
+brew 'restic'                    # backup tool — used by the ai-memory backup scripts (github.com/aladd04/ai-memory)
 brew 'ripgrep'                   # grep replacement, used as `grep` alias
 brew 'ruby'                      # ruby 3.x for Mason-installed Ruby tools (erb-lint, erb-formatter); macOS-shipped 2.6 is too old. Keg-only — see PATH shim in .aladd.zsh
 brew 'sevenzip'                  # 7zip for unpacking
