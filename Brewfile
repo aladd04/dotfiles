@@ -61,7 +61,7 @@ cask 'codex'
 # easier to maintain than work/personal variants, and unused tools cost nothing.
 # Configuring these (az login, az devops defaults, kube contexts) is still a
 # manual step — see README "Manual configuration".
-brew 'azure-cli'                 # `az` — Azure CLI; `az devops` extension added manually (see README)
+cask 'azure-cli'                 # `az` — Azure CLI (moved from formula to cask upstream); `az devops` extension added manually (see README)
 brew 'helm'                      # Kubernetes package manager
 brew 'kubernetes-cli'            # `kubectl` — aliases (k) + fzf helpers in .aladd.zsh, completion sourced when present
 brew 'kubectx'                   # `kubectx` / `kubens` — context + namespace switchers, aliased kc / kn in .aladd.zsh
