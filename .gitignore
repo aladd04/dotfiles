@@ -11,5 +11,8 @@
 /.config/herdr/*
 !/.config/herdr/config.toml
 
+# Context7 CLI (ctx7) login writes its OAuth credentials here via the ~/.config symlink; never commit
+/.config/context7/
+
 # ai-memory per-machine config and restic passwords (restic repo paths, project list, *.pw); never commit
 /.config/ai-memory/

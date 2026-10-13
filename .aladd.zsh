@@ -130,6 +130,9 @@ alias mk='minikube'
 # edit k8s stuff with nvim
 export KUBE_EDITOR='nvim'
 
+# opt out of Context7 CLI (ctx7) anonymous usage telemetry
+export CTX7_TELEMETRY_DISABLED=1
+
 # k8s autocompletion
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 
