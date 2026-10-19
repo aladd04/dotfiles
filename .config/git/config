@@ -1,0 +1,4 @@
+# Shared git defaults, read by git from ~/.config/git/config (stowed).
+# Identity and credentials stay per machine in ~/.gitconfig, which overrides this file.
+[init]
+	defaultBranch = main

@@ -16,3 +16,6 @@
 
 # ai-memory per-machine config and restic passwords (restic repo paths, project list, *.pw); never commit
 /.config/ai-memory/
+
+# gh CLI: hosts.yml is per-machine auth state, config.yml is untouched defaults; never commit
+/.config/gh/
