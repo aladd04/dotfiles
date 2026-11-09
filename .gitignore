@@ -11,6 +11,18 @@
 /.config/herdr/*
 !/.config/herdr/config.toml
 
+# herdr-app (desktop app) keeps its bundled mods, icons, layouts, window state, telemetry and socket
+# next to its config — track only settings, keys and the catppuccin theme
+/.config/herdr-app/*
+!/.config/herdr-app/settings.json
+!/.config/herdr-app/keys.json
+!/.config/herdr-app/themes/
+/.config/herdr-app/themes/*
+!/.config/herdr-app/themes/catppuccin.json
+
+# yolobox holds secrets (claude-token, azure-sp.env) alongside its config; never commit
+/.config/yolobox/
+
 # Context7 CLI (ctx7) login writes its OAuth credentials here via the ~/.config symlink; never commit
 /.config/context7/
 
